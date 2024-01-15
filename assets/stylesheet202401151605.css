@@ -1,0 +1,257 @@
+:root {
+    --base04: #001020;
+    --base03: #002b36;
+    --base02: #073642;
+    --base01: #586e75;
+    --base00: #657b83;
+    --base0: #d3cdbd;
+    --base1: #dbd6c8;
+    --base2: #eee8d5;
+    --base3: #fdf6e3;
+    --yellow: #b58900;
+    --green: #859900;
+    --red: #dc322f;
+    --blue: #268bd2;
+    --cyan: #2aa198;
+    --serif: "Lora";
+    --sansserif: sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+BODY {
+    font-family: var(--sansserif);
+    font-size: 150%;
+}
+
+A:link,
+A:visited {
+    color: var(--blue);
+}
+
+A:active,
+A:hover {
+    color: var(--cyan);
+}
+
+LI {
+    margin-left: 1.5em;
+}
+
+P {
+    line-height: 1.5em;
+}
+
+DIV.grid-container {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 'header' 'content' 'footer';
+}
+
+DIV#header {
+    grid-area: header;
+}
+
+DIV#header>DIV#navbar {
+    background-color: var(--base0);
+    color: var(--base01);
+    display: flex;
+    height: 2.5em;
+}
+
+DIV#navbar>DIV#logo {
+    color: var(--base01);
+    font-family: "Fira Code", monospace;
+    font-size: 100%;
+    font-weight: 800;
+    align-self: center;
+    padding: 0em 1em 0 1em;
+    margin-top: -0.1em;
+}
+
+DIV#navbar>DIV#separator {
+    font-weight: bold;
+    align-self: center;
+    padding: 0em 2em 0 1em;
+}
+
+DIV#header>DIV#header {
+    background-color: var(--base1);
+    color: var(--base03);
+    font-size: 300%;
+    padding: 0.25em;
+    font-family: var(--serif);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.5em;
+    height: 1.5em;
+}
+
+DIV#header>DIV#wall {
+    background-color: var(--yellow);
+    color: var(--base04);
+    padding: 0.5em;
+    text-align: center;
+    font-size: 90%;
+}
+
+DIV#content {
+    background-color: var(--base2);
+    color: var(--base03);
+    grid-area: content;
+    padding: 3em;
+}
+
+DIV#content>DIV {
+    padding: 1em;
+}
+
+DIV#content>DIV#popup {
+    font-size: 110%;
+    font-weight: 600;
+    background: var(--green);
+    color: var(--base03);
+    width: 25%;
+    text-align: center;
+    padding: 2em 0 2em 0;
+    margin: 3em auto 3em auto;
+}
+
+DIV#actions A {
+    padding: 1em 2em 1em 2em;
+}
+
+DIV#actions A.primary {
+    background-color: var(--base03);
+    color: var(--base3);
+}
+
+DIV#actions A.secondary {
+    background-color: var(--base02);
+    color: var(--base2);
+}
+
+DIV#actions A:Hover {
+    background-color: var(--blue);
+    color: var(--base04);
+}
+
+DIV#actions A.disabled,
+DIV#actions A.disabled:Hover {
+    background-color: var(--base01);
+    color: var(--base0);
+}
+
+DIV#footer {
+    grid-area: footer;
+    background-color: var(--base1);
+    color: var(--base01);
+    font-size: 55%;
+    padding: 1em;
+}
+
+UL.nav {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    height: 100%;
+    column-gap: 1em;
+}
+
+UL.nav>LI {
+    height: 100%;
+    justify-content: center;
+    align-self: center;
+}
+
+UL.nav>LI>A {
+    display: block;
+    text-decoration: none;
+    padding: 0 1em 0 1em;
+    font-size: 90%;
+    font-weight: 600;
+    xcolor: var(--base2);
+    line-height: 2.5em;
+    padding-top: 0px;
+}
+
+DIV#navbar>UL.nav>LI>A {
+    border-bottom: 8px solid var(--blue);
+}
+
+UL.nav>LI>A:Hover {
+    xbackground-color: var(--base02);
+    color: var(--base3);
+}
+
+FORM>LABEL {
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+INPUT {
+    padding: 0.25em 0.5em 0.25em 0.5em;
+    border: 2px solid var(--base0);
+    background-color: var(--base1);
+    font-size: 90%;
+}
+
+INPUT[type=submit] {
+    padding: 0.5em 1em 0.5em 1em;
+    border: none;
+    background-color: var(--base03);
+    color: var(--base2);
+    cursor: pointer;
+}
+
+INPUT[type=submit]:hover {
+    background-color: var(--blue);
+    color: var(--base04);
+    cursor: pointer;
+}
+
+TABLE,
+TH,
+TD {
+    border: 2px solid var(--base0);
+    border-collapse: collapse;
+    margin: 2em;
+    font-size: 95%;
+}
+
+TABLE {
+    margin: 2em auto 2em auto;
+    width: 85vw;
+}
+
+TH {
+    color: var(--base03);
+    background-color: var(--base0);
+    min-width: 6em;
+}
+
+TH,
+TD {
+    padding: 0.5em;
+}
+
+.bg-red {
+    background-color: var(--red);
+    color: var(--base03);
+}
+
+.bg-yellow {
+    background-color: var(--yellow);
+    color: var(--base03);
+}
+
+.bg-green {
+    background-color: var(--green);
+    color: var(--base03);
+}
