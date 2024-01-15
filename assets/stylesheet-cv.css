@@ -1,0 +1,108 @@
+DIV.hello {
+    font-size: 150%;
+    font-weight: 800;
+    color: #073642;
+}
+
+H3 {
+    font-size: 125%;
+    line-height: 1.5em;
+    font-weight: 800;
+    color: #073642;
+    font-family: var(--serif);
+
+}
+
+DIV.img-caption {
+    flex: 1 1 1;
+    width: 20vw;
+}
+
+DIV.img-caption>A>DIV.caption {
+    font-size: 75%;
+    font-family: 'Noto Sans' !important;
+    padding: 1em 0.5em 1em 0.5em;
+}
+
+DIV#cv-3of3-singleton {
+    width: 70vw;
+    margin: auto;
+    font-size: 80%;
+    display: flex;
+    gap: 2em;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+DIV.cv-3of3-container {
+    font-family: 'Noto Sans';
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    border-radius: 16px;
+    box-shadow: -0.05em -0.05em 8px #07364220, 0.15em 0.15em 8px #07364230;
+}
+
+DIV.cv-3of3-container DIV IMG {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+DIV.cv-3of3-container DIV P {
+    margin-bottom: 1em;
+}
+
+DIV.cv-1to1of3 {
+    padding: 1em;
+    grid-column: 1 / span 1;
+    background-color: #ffffff;
+    border-radius: 16px 0 0 16px;
+}
+
+DIV.cv-2to3of3 {
+    padding: 2em;
+    grid-column: 2/ span 2;
+    background-color: #fefbef;
+    border-radius: 0 16px 16px 0;
+}
+
+DIV.cv-1to2of3 {
+    padding: 2em;
+    grid-column: 1 / span 2;
+    background-color: #fefbef;
+    border-radius: 16px 0 0 16px;
+}
+
+DIV.cv-3to3of3 {
+    padding: 1em;
+    grid-column: 3/ span 1;
+    background-color: #ffffff;
+    border-radius: 0 16px 16px 0;
+}
+
+DIV#case-3of3-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 1em;
+    width: 80vw;
+    padding: 0;
+    margin: 0 auto;
+    font-family: 'Noto Sans';
+    font-size: 80%;
+}
+
+DIV#case-3of3-container>DIV.case-1of3 {
+    flex: 1 1 0;
+    width: 0;
+    padding: 0 2em 0 2em;
+}
+
+DIV#case-3of3-container>DIV.case-1of3>H3 {
+    line-height: 1.75em;
+}
+
+DIV#case-3of3-container>DIV.case-1of3>P {
+    margin-bottom: 1em;
+}

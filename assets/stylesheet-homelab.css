@@ -1,0 +1,112 @@
+DIV#content {
+    padding: 0;
+}
+
+DIV#homelab-3of3-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    padding: 0 !important;
+    min-height: 100%;
+}
+
+DIV#homelab-3of3-container>DIV {
+    padding: 1em;
+}
+
+DIV#homelab-1to1of3 {
+    background: #d3cdbd;
+    font-family: 'Fira Code';
+    font-size: 80%;
+    grid-column: 1 / span 1;
+}
+
+DIV#homelab-2to3of3 {
+    margin-left: 6em;
+    margin-right: 6em;
+    grid-column: 2 / span 3;
+}
+
+DIV.hello {
+    font-size: 200%;
+    font-weight: 500;
+    line-height: 2em;
+}
+
+DIV#homelab-1to1of3>H3 {
+    line-height: 2em;
+}
+
+DIV#homelab-1to1of3>UL {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+    justify-content: space-between;
+}
+
+DIV#homelab-1to1of3>UL>LI {
+    margin-left: 1em;
+}
+
+DIV#homelab-1to1of3>UL>LI>A {
+    text-decoration: none;
+    color: #002b36;
+    padding: 0.25em;
+    padding-left: 1em;
+    border-radius: 8px;
+    display: block;
+}
+
+DIV#homelab-1to1of3>UL>LI>A.current {
+    background-color: #859900;
+    color: #002b36;
+}
+
+DIV#homelab-1to1of3>UL>LI>A:Hover {
+    background-color: #002b36;
+    color: #eee8d5;
+}
+
+DIV#obsidian {
+    font-family: 'Noto Sans';
+    font-size: 90%;
+}
+
+DIV#obsidian>P {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+DIV#obsidian>H1,
+DIV#obsidian>H2,
+DIV#obsidian>H3 {
+    margin-top: 1em;
+    margin-bottom: 0.25em;
+}
+
+DIV#obsidian LI {
+    margin-bottom: 0.5em;
+}
+
+DIV#obsidian blockquote {
+    background: #d3cdbd;
+    border-radius: 16px;
+    padding: 2em;
+}
+
+DIV#obsidian CODE {
+    background: #d3cdbd;
+    border-radius: 4px;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    font-family: 'Fira Code', monospace;
+    font-size: 80%;
+    overflow-x: auto;
+}
+
+DIV#obsidian>PRE>CODE {
+    display: block;
+    padding: 1em;
+}
+DIV#wall {
+    font-family: 'Fira Code';
+}

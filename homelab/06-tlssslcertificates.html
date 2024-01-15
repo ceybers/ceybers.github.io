@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>craige.dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../assets/stylesheet202401151605.css" />
+  <link rel="stylesheet" href="../assets/stylesheet-homelab.css" />
+</head>
+
+<body>
+  <div class="grid-container">
+    <div id="header">
+      <div id="navbar">
+        <div id="logo">craige.dev</div>
+        <div id="separator">|</div>
+        <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/keyboards">Keyboards</a></li>
+          <li><a class="current" href="#">Homelab</a></li>
+          <li><a href="/excelvba">Excel Add-ins</a></li>
+          <li><a href="/cv">Work</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+        <div class="spacer">&nbsp;</div>
+        <div id="corner">
+          <a href="https://github.com/ceybers">My GitHub</a>
+        </div>
+      </div>
+      <div id="title">Homelab Guides</div>
+    </div>
+    <div id="content">
+      <!-- Content starts here -->
+      <div id="homelab-3of3-container">
+        <div id="homelab-1to1of3">
+          <h3>Homelab Guides</h3>
+          <ul>
+            <li><a href="01-gettingstarted.html">Getting Started</a></li>
+            <li><a href="02-installingproxmox.html">Installing Proxmox</a></li>
+            <li><a href="03-sshauthentication.html">SSH Authentication</a></li>
+            <li><a href="04-pihole.html">PiHole</a></li>
+            <li><a href="05-nginxproxymanager.html">nginx Proxy Manager</a></li>
+            <li><a class="current" href="#">TLS/SSL Certificates</a></li>
+            <li><a href="07-gitea.html">Gitea</a></li>
+            <li><a href="08-lxccontainers.html">LXC Containers</a></li>
+            <li><a href="09-typicalcontainers.html">Typical Containers</a></li>
+            <li><a href="10-vaultwarden.html">Vault Warden</a></li>
+            <li><a href="11-openmediavault.html">OpenMediaVault</a></li>
+            <li><a href="12-virtualmachines.html">Virtual Machines</a></li>
+            <li><a href="13-docker.html">Docker</a></li>
+            <li><a href="14-igpupassthrough.html">iGPU Passthrough</a></li>
+            <li><a href="15-backups.html">Backups</a></li>
+          </ul>
+        </div>
+        <div id="homelab-2to3of3">
+          <!-- Article starts here -->
+          <div class="hello">TLS/SSL Certificates</div>
+          <div id="obsidian">
+
+            <h1>Description</h1>
+            <p>After setting up the Reverse Proxy, you probably noticed your web browser warning you about an invalid
+              certificate or your connection not being private, perhaps with error message
+              <code>NET::ERR_CERT_AUTHORITY_INVALID</code>. As you experiment with more services, you'll find some of
+              them don't work at all on https, or only offer limited functionality.
+            </p>
+            <p>There are two ways of solving this: buy a domain name and get a TLS certificate from a Trusted Root
+              Certificate Authority (e.g., LetsEncrypt), or create your own Certificate Authority certificate and
+              install it on all your devices.</p>
+            <p>Note: TLS is the successor to SSL. You will often see people using them interchangeably.</p>
+            <h1>tl;dr Version</h1>
+            <p>This should be the quickest way of generating a self-signed certificate, but I suggest reading through
+              the explanation below, as it helps to understand what <em>exactly</em> you're doing here.</p>
+            <pre><code class="bash language-bash">mkdir -p ~/tls/wildcard4
+cd $_
+
+cat &lt;&lt; 'EOF' &gt;&gt; csr.conf
+[req]
+distinguished_name = dn
+req_extensions = req_ext
+prompt = no
+
+[dn]
+C = ZA
+ST = State
+L = Locality
+O = Crganisation
+OU = Organisational Unit
+CN = proxmox.box
+
+[req_ext]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = proxmox.box
+DNS.2 = *.proxmox.box
+EOF
+
+# Create a private key and Certificate Signing Request (CSR)
+openssl req -newkey rsa:2048 -nodes \
+    -config csr.conf \
+    -keyout wildcard4.key \
+    -out wildcard4.csr
+
+# Sign the CSR using the root CA's private key
+openssl x509 -req -sha256 \
+    -CA /etc/pve/pve-root-ca.pem \
+    -CAkey /etc/pve/priv/pve-root-ca.key \
+    -CAcreateserial \
+    -days 3650 \
+    -copy_extensions copyall \
+    -in wildcard4.csr \
+    -out wildcard4.crt
+
+rm wildcard4.csr</code></pre>
+            <h1>What now?</h1>
+            <p>You now have two files:</p>
+            <ul>
+              <li><code>wildcard4.key</code> - The private key. </li>
+              <li><code>wildcard4.crt</code> - The signed TLS certificate.</li>
+            </ul>
+            <p>This certificate is valid on your internal network for any domain ending in <code>proxmox.box</code>. You
+              just need to: </p>
+            <ol>
+              <li>Give both the signed certificate and its matching private key to nginx Proxy Manager </li>
+              <li>Every device accessing it needs to trust your root CA certificate (<code>pve-root-ca.pem</code>)</li>
+            </ol>
+            <p>For step 1 head back to the section on nginx Proxy Manager. Step 2 follows below here.</p>
+            <h1>Trusting Certificates on Windows</h1>
+            <p>In an elevated prompt, run:</p>
+            <pre><code class="PowerShell language-PowerShell">Import-Certificate -FilePath 'pve-root-ca.pem' -CertStoreLocation 'Cert:\LocalMachine\Root'</code></pre>
+            <p>If you prefer using the GUI:</p>
+            <ul>
+              <li>Open Certificate Manager by running <code>certmgr.msc</code></li>
+              <li>Navigate to "Trusted Root Certification Authorities"</li>
+              <li>On the menu, select Action &gt; All Tasks &gt; Import...</li>
+              <li>Place all certificates in the following store: "Trusted Root Certification Authorities"</li>
+              <li>You should be prompted: "You are about to install a certificate from a CA claiming to represent
+                <em>Proxmox Virtual Environment</em>"
+              </li>
+            </ul>
+            <h1>Trusting Certificates on Linux</h1>
+            <ul>
+              <li>Get a copy of the public certificate.</li>
+              <li>If it's not in <code>.crt</code> format, convert it from <code>.pem</code> to <code>.crt</code>:<ul>
+                  <li><code>openssl x509 -in pve-root-ca.pem -inform PEM -out pve-root-ca.crt</code></li>
+                </ul>
+              </li>
+              <li>Copy it to the folder: <code>/usr/local/share/ca-certificates/</code> </li>
+              <li>Run the command: <code>update-ca-certificates</code></li>
+              <li>Test that it works:</li>
+            </ul>
+            <pre><code class="bash language-bash">wget https://192.168.100.2:8006</code></pre>
+            <h1>Trusting Certificates on Android</h1>
+            <ul>
+              <li>Copy the certificate to your phone's storage.</li>
+              <li>To install, just double tap the certificate in a file browser.</li>
+              <li>When installing, choose "VPN or Apps". <ul>
+                  <li>"WiFi certificate" is for 802.11 authentication.</li>
+                </ul>
+              </li>
+            </ul>
+            <h3>Removing a Certificate on Android</h3>
+            <ul>
+              <li>To remove a user installed certificate, open Settings and navigate to:<ul>
+                  <li>Passwords &amp; Security &gt; Privacy &gt; Encryption &amp; credentials &gt; Credential storage
+                    &gt; User credentials</li>
+                </ul>
+              </li>
+            </ul>
+            <h1>Why, How and What?</h1>
+            <ul>
+              <li>Why: Your browser and your servers want to ensure their connection is secure.</li>
+              <li>How: Your browser trusts Certificate Authorities. Therefore any certificate they've signed, your
+                browser will trust. If your browser trusts a certificate, it can create a secure connection with a
+                server that owns the certificate (i.e., holds the private key).</li>
+              <li>What: Your server creates a Private Key and a Certificate Signing Request. It sends the CSR to the
+                Certificate Authority. The Certificate Authority verifies your identity, and if it is satisfied, signs
+                the CSR which results in a Signed Certificate. It then returns the Signed Certificate to the server.
+              </li>
+            </ul>
+            <h1>How does this secure the connection?</h1>
+            <ul>
+              <li>The browser connects to the server and the server sends it a copy of its TLS certificate.</li>
+              <li>The browser checks to make sure the TLS certificate was signed by a Certificate Authority it trusts.
+              </li>
+              <li>The browser generates a symmetric session key, and encrypts this using the server's certificate. It
+                then sends this encrypted session key to the server.</li>
+              <li>The server decrypts the encrypted session key using the private key that corresponds to its
+                certificate. <ul>
+                  <li>Anyone can encrypt data using the TLS certificate, but only the corresponding private key can
+                    decrypt data.</li>
+                </ul>
+              </li>
+              <li>Now that both the browser and the server have a decrypted copy of the session key, they both encrypt
+                their traffic using it.</li>
+              <li>Once the connection is closed, they discard the session key. </li>
+            </ul>
+            <h1>LetsEncrypt and ACME Protocol</h1>
+            <blockquote>
+              <p>
+                Let's Encrypt is a non-profit Certificate Authority that provides certificates free of charge. Using the
+                Automatic Certificate Management Environment protocol, the request and renewal of certificates can be
+                automated using tools such as certbot. </p>
+            </blockquote>
+            <h1>See Also</h1>
+            <h1>External Links</h1>
+            <ul>
+              <li><a href="https://www.youtube.com/watch?v=j9QmMEWmcfo">SSL, TLS, HTTPS Explained - YouTube</a></li>
+              <li><a
+                  href="https://www.ssl.com/how-to/manually-generate-a-certificate-signing-request-csr-using-openssl/">Manually
+                  Generate a Certificate Signing Request (CSR) Using OpenSSL - SSL.com</a></li>
+            </ul>
+
+          </div>
+          <!-- Article ends here -->
+        </div>
+      </div>
+      <!-- Content ends here -->
+    </div>
+    <div id="footer">
+      <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+
+</html>

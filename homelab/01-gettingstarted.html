@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>craige.dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../assets/stylesheet202401151605.css" />
+  <link rel="stylesheet" href="../assets/stylesheet-homelab.css" />
+</head>
+
+<body>
+  <div class="grid-container">
+    <div id="header">
+      <div id="navbar">
+        <div id="logo">craige.dev</div>
+        <div id="separator">|</div>
+        <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/keyboards">Keyboards</a></li>
+          <li><a class="current" href="#">Homelab</a></li>
+          <li><a href="/excelvba">Excel Add-ins</a></li>
+          <li><a href="/cv">Work</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+        <div class="spacer">&nbsp;</div>
+        <div id="corner">
+          <a href="https://github.com/ceybers">My GitHub</a>
+        </div>
+      </div>
+      <div id="title">Homelab Guides</div>
+    </div>
+    <div id="content">
+      <!-- Content starts here -->
+      <div id="homelab-3of3-container">
+        <div id="homelab-1to1of3">
+          <h3>Homelab Guides</h3>
+          <ul>
+            <li><a class="current" href="#">Getting Started</a></li>
+            <li><a href="02-installingproxmox.html">Installing Proxmox</a></li>
+            <li><a href="03-sshauthentication.html">SSH Authentication</a></li>
+            <li><a href="04-pihole.html">PiHole</a></li>
+            <li><a href="05-nginxproxymanager.html">nginx Proxy Manager</a></li>
+            <li><a href="06-tlssslcertificates.html">TLS/SSL Certificates</a></li>
+            <li><a href="07-gitea.html">Gitea</a></li>
+            <li><a href="08-lxccontainers.html">LXC Containers</a></li>
+            <li><a href="09-typicalcontainers.html">Typical Containers</a></li>
+            <li><a href="10-vaultwarden.html">Vault Warden</a></li>
+            <li><a href="11-openmediavault.html">OpenMediaVault</a></li>
+            <li><a href="12-virtualmachines.html">Virtual Machines</a></li>
+            <li><a href="13-docker.html">Docker</a></li>
+            <li><a href="14-igpupassthrough.html">iGPU Passthrough</a></li>
+            <li><a href="15-backups.html">Backups</a></li>
+          </ul>
+        </div>
+        <div id="homelab-2to3of3">
+          <!-- Article starts here -->
+          <div class="hello">Proxmox VE Server - Getting Started</div>
+          <div id="obsidian">
+            <h2>What we will be doing</h2>
+            <p>The purpose of this guide is to walk you through setting up a small homelab server using Proxmox Virtual
+              Environment. </p>
+            <p>We will host a local DNS sinkhole, a reverse proxy with self-signed SSL certificates, a variety of
+              containers, both Linux and Windows virtual machines, and we'll finish off with a virtual machine that has
+              full graphics and USB controller passthrough.</p>
+            <p>This guide assumes you are familiar with Linux and that you're comfortable working in the command line. I
+              won't be documenting every step and each button click, but rather focusing on the more interesting and
+              challenging steps. </p>
+            <h2>Why another guide?</h2>
+            <p>There are many great guides out there, but there were three specific topics where I I still ended up
+              scratching my head a bit. So I decided to share my notes and hopefully spare at least one person having to
+              pull out all their hair.</p>
+            <ul>
+              <li>08-igpupassthrough|iGPU Passthrough with Video Out to a physical monitor</li>
+              <li>04-ssl_tls|Self-signed TLS/SSL Certificates</li>
+              <li>Reverse Proxies and Wildcard DNS Subdomains</li>
+            </ul>
+            <h2>Requirements</h2>
+            <p>This guide assumes you have the following:</p>
+            <ul>
+              <li>A PC to install a fresh copy of Proxmox on.</li>
+              <li>A second PC to access Proxmox's web UI.</li>
+            </ul>
+            <h2>Hardware Options</h2>
+            <p>I'm a big fan of Ultra Small Form Factor PCs. If you're unfamiliar with them, <a
+                href="https://www.serverthehome.com">Serve The Home</a> has a great series of articles on them: <a
+                href="https://www.servethehome.com/introducing-project-tinyminimicro-home-lab-revolution/">Introducing
+                Project TinyMiniMicro Home Lab Revolution - ServeTheHome</a>.</p>
+            <p>You should be able to pick up an ex-business second-hand Dell Micro, HP Mini, Intel NUC, or Lenovo Tiny
+              for about $100 with a socketed i5 CPU, 2x DDR4 SO-DIMM slots, and at least one NVMe slot. These units tend
+              to pull around 10W of power at idle, using a 19V power brick similar to what laptops use.</p>
+            <h2>Disclaimer</h2>
+            <p>This guide is intended to be used for setting up a homelab for experimenting and development. It is not
+              intended for use in production. Don't use it to store any sensitive or valuable information that you don't
+              want to lose, and don't expose anything running on it to the internet. Your router and its firewall should
+              already be doing a good enough job at this, but err on the side of caution.</p>
+
+            <p>More advanced guides and tutorials cover using a VPN so that you can securely access your homelab
+              remotely. This guide won't be covering that.</p>
+
+            <h2>External Links</h2>
+            <ul>
+              <li><a href="https://www.proxmox.com/en/">Proxmox - Powerful open-source server solutions</a></li>
+            </ul>
+          </div>
+          <!-- Article ends here -->
+        </div>
+      </div>
+      <!-- Content ends here -->
+    </div>
+    <div id="footer">
+      <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,267 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>craige.dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../assets/stylesheet202401151605.css" />
+  <link rel="stylesheet" href="../assets/stylesheet-homelab.css" />
+</head>
+
+<body>
+  <div class="grid-container">
+    <div id="header">
+      <div id="navbar">
+        <div id="logo">craige.dev</div>
+        <div id="separator">|</div>
+        <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/keyboards">Keyboards</a></li>
+          <li><a class="current" href="#">Homelab</a></li>
+          <li><a href="/excelvba">Excel Add-ins</a></li>
+          <li><a href="/cv">Work</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+        <div class="spacer">&nbsp;</div>
+        <div id="corner">
+          <a href="https://github.com/ceybers">My GitHub</a>
+        </div>
+      </div>
+      <div id="title">Homelab Guides</div>
+    </div>
+    <div id="content">
+      <!-- Content starts here -->
+      <div id="homelab-3of3-container">
+        <div id="homelab-1to1of3">
+          <h3>Homelab Guides</h3>
+          <ul>
+            <li><a href="01-gettingstarted.html">Getting Started</a></li>
+            <li><a href="02-installingproxmox.html">Installing Proxmox</a></li>
+            <li><a href="03-sshauthentication.html">SSH Authentication</a></li>
+            <li><a href="04-pihole.html">PiHole</a></li>
+            <li><a href="05-nginxproxymanager.html">nginx Proxy Manager</a></li>
+            <li><a href="06-tlssslcertificates.html">TLS/SSL Certificates</a></li>
+            <li><a href="07-gitea.html">Gitea</a></li>
+            <li><a href="08-lxccontainers.html">LXC Containers</a></li>
+            <li><a href="09-typicalcontainers.html">Typical Containers</a></li>
+            <li><a href="10-vaultwarden.html">Vault Warden</a></li>
+            <li><a href="11-openmediavault.html">OpenMediaVault</a></li>
+            <li><a href="12-virtualmachines.html">Virtual Machines</a></li>
+            <li><a href="13-docker.html">Docker</a></li>
+            <li><a href="14-igpupassthrough.html">iGPU Passthrough</a></li>
+            <li><a href="15-backups.html">Backups</a></li>
+          </ul>
+        </div>
+        <div id="homelab-2to3of3">
+          <!-- Article starts here -->
+          <div class="hello">iGPU Passthrough</div>
+          <div id="obsidian">
+            <h1>Description</h1>
+            <p>In this section we will be using GPU Passthrough to give one particular virtual machine exclusive use of
+              the integrated GPU in the machine running our Proxmox server. We will also set up USB passthrough,
+              allowing us to use the VM with physical monitors and USB peripherals as if it were running bare metal.</p>
+            <h1>Criteria for our iGPU Passthrough setup</h1>
+            <p>There are many variants of GPU passthrough. The end goal we want is:</p>
+            <ul>
+              <li>Proxmox as the host, and a Windows 10 or 11 guest</li>
+              <li>Passthrough of the entire GPU (no virtualisation i.e. GPU splitting)</li>
+              <li>The GPU being passed through is an Intel iGPU</li>
+              <li>Full display output to a physical monitor</li>
+            </ul>
+            <h1>Why another guide?</h1>
+            <p>There is a not-so-obvious catch to getting the above configuration to work. Getting the video output to
+              work requires using an Intel Graphics driver dated 2019 or earlier - newer versions will result in Code 43
+              errors. Left to its own devices, Windows will automatically update the driver to the latest version,
+              disabling your video output.</p>
+            <p>After some trial and error with which steps are actually required and what the most efficient order is to
+              perform them, I've finally figured out a procedure that works reliably for myself.</p>
+            <h2>tl;dr?</h2>
+            <ol>
+              <li>Install Windows in the VM with network access disabled.</li>
+              <li>Pre-load the 2019 drivers.</li>
+              <li>Disable Windows Update from automatically updating drivers.</li>
+              <li>Shutdown the VM.</li>
+              <li>Change the VM config to passthrough the iGPU with OpRegion support.</li>
+              <li>Start up the VM.</li>
+            </ol>
+            <h1>Detail Instructions</h1>
+            <h2>Preparing the Host</h2>
+            <h3>Enabling IOMMU in BIOS</h3>
+            <p>The exact BIOS settings will depend on your specific motherboard, so I won't go through all the options.
+              On my machine, the setting is named <code>VT-d</code>, which stands for "Intel® Virtualization Technology
+              for Directed I/O".</p>
+            <h2>Find the PCI Bus and Slot ID and Device ID</h2>
+            <p>In the Proxmox CLI, run the following command to get the PCI bus, slot ID, and numeric device ID for your
+              iGPU:</p>
+            <pre><code>lspci -nn | grep VGA</code></pre>
+            <p>You should see something like this:</p>
+            <pre><code>00:02.0 VGA compatible controller [0300]: Intel Corporation HD Graphics 530 [8086:1912] (rev 06)</code></pre>
+            <p>The first set of numbers (<code>00:02.0</code>) is the PCI bus, slot ID, and function ID. The last pair
+              of hexadecimal characters (<code>8086:1912</code>) are the vendor and device ID, with <code>8086</code>
+              being the vendor ID for Intel, and <code>1912</code> being the device ID for this particular iGPU.</p>
+            <h2>Enable IOMMU in GRUB</h2>
+            <p>Open the file <code>/etc/default/grub</code>, find the line starting with
+              <code>GRUB_CMDLINE_LINUX_DEFAULT</code>, and append the flag <code>intel_iommu=on</code> to the end. </p>
+            <p>Before (example):</p>
+            <pre><code>GRUB_CMDLINE_LINUX_DEFAULT="quiet"</code></pre>
+            <p>After:</p>
+            <pre><code>GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on"</code></pre>
+            <p>Then apply the change by executing the below:</p>
+            <pre><code>update-grub2</code></pre>
+            <h2>Update <code>initramfs</code></h2>
+            <p>Edit the file <code>/etc/modprobe.d/vfio.conf</code> so that it contains the following:</p>
+            <pre><code>options vfio-pci ids=8086:3912
+            softdep drm pre: vfio-pci</code></pre>
+            <p>Then apply the change by executing the following:</p>
+            <pre><code>update-initramfs -u -k all</code></pre>
+            <p>Reboot your Proxmox host for the changes to take effect.</p>
+            <h1>Linux Guest</h1>
+            <p>I recommend first testing GPU Passthrough with a Linux VM as they have better iGPU passthrough support.
+              This will eliminate any issues with your hardware or host configuration.</p>
+            <ul>
+              <li>Download your ISO and store it in the <code>local</code> storage of your Proxmox node. I did this test
+                using <a href="https://pop.system76.com/">Pop!_OS by System76</a> as my distro.</li>
+              <li>Create a normal Linux VM.<ul>
+                  <li>Machine type <code>i440fx</code> and <code>SeaBIOS</code> bios.</li>
+                  <li>Disks: enable <code>Discard</code> and <code>SSD Emulation</code></li>
+                  <li>CPU: Change <code>Type</code> to <code>host</code>, and increase <code>Cores</code> </li>
+                </ul>
+              </li>
+              <li>Install the OS. Once you have a working desktop environment, shut down the VM.</li>
+              <li>In the Proxmox web UI, navigate to the VM, select Hardware from the list view, click the
+                <code>Add</code> button, and select <code>PCI Device</code>.</li>
+              <li>Select the radio button <code>Raw Device</code> if it is present, then change the Device dropdown to
+                the entry for your iGPU. The checkboxes can remain on their defaults.</li>
+              <li>Repeat the process for your USB Host Controller (or USB devices if you choose that method).</li>
+              <li>Start up the VM. You should have video output displaying once the VM has reached the User Login screen
+                for your desktop environment.</li>
+            </ul>
+            <h1>Windows 10 Guest</h1>
+            <h2>Preparation</h2>
+            <p>Before you start, you will need:</p>
+            <ul>
+              <li>A Windows 10 ISO saved in <code>local</code> storage. </li>
+              <li>The Windows VirtIO drivers ISO saved in <code>local</code> storage.<ul>
+                  <li>We'll need these as the Windows setup ISO does not include drivers for our virtualised devices.
+                  </li>
+                  <li><a href="https://pve.proxmox.com/wiki/Windows_VirtIO_Drivers">Windows VirtIO Drivers - Proxmox
+                      VE</a></li>
+                </ul>
+              </li>
+              <li>Intel Graphics Drivers from 2019.<ul>
+                  <li>I've successfully used <code>igfx_win10_100.7158</code> dated 2019/09/09.</li>
+                  <li>You will need to get this inside the VM. You can passthrough a USB Flash Drive or USB External
+                    HDD, host it on a SMB/CIFS network share, or create an ISO image with the contents of the driver zip
+                    file.</li>
+                </ul>
+              </li>
+            </ul>
+            <h2>VM Creation</h2>
+            <ul>
+              <li>Create a Windows 10 VM.</li>
+              <li>Set Machine type to <code>i440fx</code> and BIOS to <code>SeaBios</code>. </li>
+              <li>Network: enable the <code>Disconnect</code> checkbox to disable network access.</li>
+              <li>Start the VM and follow the setup wizard until you arrive on the desktop.</li>
+            </ul>
+            <h2>Desktop Configuration</h2>
+            <ul>
+              <li>Next, navigate to the Intel Graphics driver folder, and into the <code>Graphics</code> subfolder..
+                Then run the <code>pnp-util</code> command. This will take a while.</li>
+            </ul>
+            <pre><code>cd ~\Desktop\igfx\Graphics
+            pnp-util -a iigd_dch.inf</code></pre>
+            <ul>
+              <li>Open an elevated command prompt and run the following command:</li>
+            </ul>
+            <pre><code class="PowerShell language-PowerShell">reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /f /v ExcludeWUDriversInQualityUpdate /t REG_DWORD /d 1</code></pre>
+            <ul>
+              <li>Shutdown the VM.</li>
+            </ul>
+            <h2>Adding iGPU Passthrough to the VM</h2>
+            <ul>
+              <li>In your Proxmox CLI, navigate to the folder storing your VM configuration files and open the
+                <code>.conf</code> file for your VM, e.g. <code>/etc/pve/nodes/comet/qemu-server/101.conf</code></li>
+              <li>Add the three following lines:</li>
+            </ul>
+            <pre><code>args: -device vfio-pci,host=00:02.0,x-igd-opregion=on,x-igd-gms=1
+vga: none</code></pre>
+            <ul>
+              <li>The first line tells Proxmox to passthrough the iGPU device at ID <code>00:02.0</code>. The
+                <code>opregion</code> setting enable OpRegion support which enables physical video out. The
+                <code>gms</code> setting allocates a small amount of RAM which seems to be necessary for OpRegion to
+                work.</li>
+              <li>The second line disables the Proxmox standard virtualised display as it would occupy the same address
+                in the VM as the iGPU, preventing the VM from starting.</li>
+              <li>Save and close the file.</li>
+            </ul>
+            <h2>Testing video output</h2>
+            <ul>
+              <li>Start up the VM. It should take a bit longer than usual as it will detect the presence of a new device
+                and install the drivers. Once Windows gets to the User Login stage, you should have video output on your
+                monitor.</li>
+            </ul>
+            <h1>Windows 11 Guest</h1>
+            <h2>VM Creation</h2>
+            <ul>
+              <li>The steps are similar to Windows 10. The main difference is that by default, Proxmox will default to
+                the <code>q35</code> machine type and a <code>OVMF</code>UEFI instead of <code>i440fx</code> and
+                <code>SeaBIOS</code>. Windows 11 <em>can</em> work without UEFI and TPM, we just need to bypass it.</li>
+              <li>During VM creation, change the machine type to <code>i440fx</code>, the BIOS to <code>SeaBIOS</code>
+                and disable <code>TPM</code>.</li>
+              <li>Start the VM</li>
+            </ul>
+            <h2>Windows Setup</h2>
+            <ul>
+              <li>During the first phase of the setup process, when it asks you which version of Windows you'd like to
+                install, press <code>Shift+F10</code> to open a command prompt.</li>
+              <li>Open <code>regedit</code>. Navigate to <code>HKEY_LOCAL_MACHINE\SYSTEM\Setup</code> and create a key
+                (i.e. folder) named <code>LabConfig</code>.</li>
+              <li>Create two DWORD (32-bit) entries, one named <code>BypassSecureBootCheck</code> and the second named
+                <code>BypassTPMCheck</code>. Set their values to <code>1</code>. </li>
+              <li>Close <code>regedit</code> and the command prompt, and continue the installation.</li>
+              <li>The setup wizard should continue.</li>
+              <li>The rest of the steps are the same as for the Windows 10 VM.</li>
+            </ul>
+            <h1>Troubleshooting Tips</h1>
+            <p>If you're having difficulty, here are some tips:</p>
+            <ul>
+              <li>Enable Remote Desktop access (<code>Win</code> &gt; <code>Remote Desktop Settings</code>) and note the
+                IP address of the VM (<code>Win</code> &gt; <code>cmd</code> &gt; <code>ipconfig</code>). </li>
+              <li>If you enable <code>Qemu Agent</code> in the VM and install the guest client tools on the Windows
+                VirtIO drivers CD (<code>D:\virtio-win-guest-tools.exe</code>) you'll be able to see the IP address of
+                the Windows VM from Proxmox web UI and gracefully reboot/shutdown the VM.</li>
+              <li>You can enable local network access by setting the network card to use a valid static IP with an
+                incorrect gateway. e.g.:<ul>
+                  <li>IP: <code>192.168.8.100</code></li>
+                  <li>Mask: <code>255.255.255.0</code></li>
+                  <li>Gateway: <code>192.168.8.199</code> (where there is no device using <code>.199</code>)</li>
+                  <li>You can then disable the <code>Disconnect</code> checkbox in Proxmox which simulates the network
+                    cable being disconnected.</li>
+                </ul>
+              </li>
+              <li>Make sure your <code>C:\</code> drive is at least 48GB. Windows will use up over 32GB halfway through
+                running Windows Updates.</li>
+              <li>Consider using Proxmox to take a snapshot of the VM once you've reached the desktop. If something goes
+                wrong you can just restore the snapshot instead of going through Windows Setup again.</li>
+              <li>There are several settings you can change to improve the performance, such as using <code>SCSI</code>
+                instead of <code>IDE</code> and playing with the Cache settings. These are general to VM creation and I
+                have not covered them in here.</li>
+            </ul>
+
+          </div>
+          <!-- Article ends here -->
+        </div>
+      </div>
+      <!-- Content ends here -->
+    </div>
+    <div id="footer">
+      <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+
+</html>

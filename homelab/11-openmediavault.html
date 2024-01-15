@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>craige.dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../assets/stylesheet202401151605.css" />
+  <link rel="stylesheet" href="../assets/stylesheet-homelab.css" />
+</head>
+
+<body>
+  <div class="grid-container">
+    <div id="header">
+      <div id="navbar">
+        <div id="logo">craige.dev</div>
+        <div id="separator">|</div>
+        <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/keyboards">Keyboards</a></li>
+          <li><a class="current" href="#">Homelab</a></li>
+          <li><a href="/excelvba">Excel Add-ins</a></li>
+          <li><a href="/cv">Work</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+        <div class="spacer">&nbsp;</div>
+        <div id="corner">
+          <a href="https://github.com/ceybers">My GitHub</a>
+        </div>
+      </div>
+      <div id="title">Homelab Guides</div>
+      <div id="wall">Work in Progress</div>
+    </div>
+    <div id="content">
+      <!-- Content starts here -->
+      <div id="homelab-3of3-container">
+        <div id="homelab-1to1of3">
+          <h3>Homelab Guides</h3>
+          <ul>
+            <li><a href="01-gettingstarted.html">Getting Started</a></li>
+            <li><a href="02-installingproxmox.html">Installing Proxmox</a></li>
+            <li><a href="03-sshauthentication.html">SSH Authentication</a></li>
+            <li><a href="04-pihole.html">PiHole</a></li>
+            <li><a href="05-nginxproxymanager.html">nginx Proxy Manager</a></li>
+            <li><a href="06-tlssslcertificates.html">TLS/SSL Certificates</a></li>
+            <li><a href="07-gitea.html">Gitea</a></li>
+            <li><a href="08-lxccontainers.html">LXC Containers</a></li>
+            <li><a href="09-typicalcontainers.html">Typical Containers</a></li>
+            <li><a href="10-vaultwarden.html">Vault Warden</a></li>
+            <li><a class="current" href="#">OpenMediaVault</a></li>
+            <li><a href="12-virtualmachines.html">Virtual Machines</a></li>
+            <li><a href="13-docker.html">Docker</a></li>
+            <li><a href="14-igpupassthrough.html">iGPU Passthrough</a></li>
+            <li><a href="15-backups.html">Backups</a></li>
+          </ul>
+        </div>
+        <div id="homelab-2to3of3">
+          <!-- Article starts here -->
+          <div class="hello">OpenMediaVault</div>
+          <div id="obsidian">
+
+            <h1>Description</h1>
+            <h1>Installation</h1>
+            <h2>Download ISO</h2>
+            <ul>
+              <li>Navigate to the <code>local</code> storage on your Proxmox node. Select <code>ISO Images</code> in the
+                list view, then click the <code>Download from URL</code> button in the ribbon.</li>
+              <li>Download the OpenMediaVault ISO, e.g.:<br />
+                <a
+                  href="https://sourceforge.net/projects/openmediavault/files/6.5.0/openmediavault_6.5.0-amd64.iso">https://sourceforge.net/projects/openmediavault/files/6.5.0/openmediavault_6.5.0-amd64.iso</a>
+              </li>
+            </ul>
+            <h2>Create VM</h2>
+            <ul>
+              <li>Create a new VM following the wizard.<ul>
+                  <li>The disk <code>scsi0</code> will be for your system volume. This won't be used to store any
+                    storage data. We'll add the storage drive later.</li>
+                  <li>Under the <code>CPU</code> tab, increase the number of Cores, and change Type to
+                    <code>host</code>.</li>
+                </ul>
+              </li>
+              <li>Once the wizard is complete, navigate to the new VM in the tree view, then select <code>Console</code>
+                in the list view.</li>
+            </ul>
+            <h2>Install OpenMediaVault</h2>
+            <ul>
+              <li>Follow the OpenMediaVault's installation wizard.</li>
+              <li>When it's complete, shut down the VM (don't reboot or restart)</li>
+              <li>Under Hardware, remove the item called <code>CD/DVD Drive (ide2)</code> that is your Installation ISO.
+              </li>
+              <li>Log in to the web UI (the credentials are in the console login screen)</li>
+              <li>Change your password</li>
+              <li>Go to <code>Network</code> &gt; <code>Interfaces</code> &gt; <code>Interface 1</code> &gt;
+                <code>Edit</code> and give your device a static IP.</li>
+              <li>If you've never used OMV before, you'll notice that it will prompt you with a yellow banner to confirm
+                changes before applying them. You will have to do this whenever you make changes.</li>
+            </ul>
+            <h2>Passing through a SATA drive</h2>
+            <ul>
+              <li>Get the disk ID of the disk you want to passthrough:<ul>
+                  <li><code>ls -l /dev/disk/by-id | grep ata</code></li>
+                </ul>
+              </li>
+              <li>Add it to your VM with the following:<ul>
+                  <li><code>qm set 103 -scsi2 /dev/disk/by-id/ata-ST1000LM035-1RK172_WL1P2SZV</code></li>
+                </ul>
+              </li>
+              <li>You should now see the drive in the web UI under <code>Storage</code> &gt; <code>Disks</code></li>
+              <li>If you're not using encryption, you can create a file system. Otherwise, head on to encryption.</li>
+            </ul>
+            <h2>Enable omv-extras and LUKS encryption</h2>
+            <ul>
+              <li><a href="https://wiki.omv-extras.org/">start [omv-extras.org]</a></li>
+              <li>Install omv-extras using the command on the docs page.</li>
+              <li>In OMV web UI, navigate to <code>System</code> &gt; <code>Plugins</code>, then search for
+                <code>luks</code> to find:<ul>
+                  <li><code>openmediavault-luksencryption</code></li>
+                </ul>
+              </li>
+              <li>Select it in the list, click the <code>Install</code> button on the ribbon, then <code>Confirm</code>
+                and press <code>Yes</code>.</li>
+              <li>#todo How do we backup the header file?</li>
+            </ul>
+            <h2>Encrypt your storage harddrive</h2>
+            <ul>
+              <li>Navigate to <code>Storage</code> &gt; <code>Encryption</code> &gt; <code>Create</code></li>
+              <li>Fill in the dialog, and confirm the changes.</li>
+            </ul>
+            <h2>Create filesystem</h2>
+            <ul>
+              <li><code>Storage</code> &gt; <code>File Systems</code> &gt; <code>Create and mount a filesystem</code>
+              </li>
+            </ul>
+            <h2>Create a Shared Folder</h2>
+            <ul>
+              <li><code>Storage</code> &gt; <code>Shared Folders</code> &gt; <code>Create</code></li>
+            </ul>
+            <h2>Enable SMB/CIFS</h2>
+            <ul>
+              <li><code>Services</code> &gt; <code>SMB/CIFS</code> &gt; <code>Settings</code> &gt; <code>Enabled</code>
+                to true</li>
+            </ul>
+            <h2>Create a SMB Share</h2>
+            <ul>
+              <li><code>Services</code> &gt; <code>SMB/CIFS</code> &gt; <code>Shares</code> &gt; <code>Create</code>
+              </li>
+              <li>Under <code>Shared folder</code> select the one you just created.</li>
+            </ul>
+            <h2>Create a SMB User</h2>
+            <ul>
+              <li><code>Users</code> &gt; <code>Users</code> &gt; <code>Create | Import</code></li>
+              <li>Select the user you just created, then click the <code>Permissions</code> button on the ribbon.</li>
+              <li>Add <code>Read/Write</code> for the Shared Folder you created earlier.</li>
+              <li>Click <code>Save</code>, then <code>Apply configuration changes</code>.</li>
+            </ul>
+            <h1>Setting up Shared Folders</h1>
+            <h1>Setting up SMB shares</h1>
+            <h1>Setting up NFS shares</h1>
+            <ul>
+              <li>Enable NFS under Services &gt; NFS &gt; Settings</li>
+              <li>Create a new Share under Services &gt; NFS &gt; Shares</li>
+            </ul>
+            <h1>See Also</h1>
+            <ul>
+              </ul>
+            <h1>External Links</h1>
+            <ul>
+              <li><a href="https://docs.openmediavault.org/en/latest/installation/index.html">Installation —
+                  openmediavault 6.x.y documentation</a></li>
+              <li><a href="https://pve.proxmox.com/wiki/Passthrough_Physical_Disk_to_Virtual_Machine_(VM)">Passthrough
+                  Physical Disk to Virtual Machine (VM) - Proxmox VE</a></li>
+            </ul>
+
+          </div>
+          <!-- Article ends here -->
+        </div>
+      </div>
+      <!-- Content ends here -->
+    </div>
+    <div id="footer">
+      <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+
+</html>

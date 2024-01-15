@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>craige.dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../assets/stylesheet202401151605.css" />
+  <link rel="stylesheet" href="../assets/stylesheet-homelab.css" />
+</head>
+
+<body>
+  <div class="grid-container">
+    <div id="header">
+      <div id="navbar">
+        <div id="logo">craige.dev</div>
+        <div id="separator">|</div>
+        <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/keyboards">Keyboards</a></li>
+          <li><a class="current" href="#">Homelab</a></li>
+          <li><a href="/excelvba">Excel Add-ins</a></li>
+          <li><a href="/cv">Work</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+        <div class="spacer">&nbsp;</div>
+        <div id="corner">
+          <a href="https://github.com/ceybers">My GitHub</a>
+        </div>
+      </div>
+      <div id="title">Homelab Guides</div>
+    </div>
+    <div id="content">
+      <!-- Content starts here -->
+      <div id="homelab-3of3-container">
+        <div id="homelab-1to1of3">
+          <h3>Homelab Guides</h3>
+          <ul>
+            <li><a href="01-gettingstarted.html">Getting Started</a></li>
+            <li><a class="current" href="#">Installing Proxmox</a></li>
+            <li><a href="03-sshauthentication.html">SSH Authentication</a></li>
+            <li><a href="04-pihole.html">PiHole</a></li>
+            <li><a href="05-nginxproxymanager.html">nginx Proxy Manager</a></li>
+            <li><a href="06-tlssslcertificates.html">TLS/SSL Certificates</a></li>
+            <li><a href="07-gitea.html">Gitea</a></li>
+            <li><a href="08-lxccontainers.html">LXC Containers</a></li>
+            <li><a href="09-typicalcontainers.html">Typical Containers</a></li>
+            <li><a href="10-vaultwarden.html">Vault Warden</a></li>
+            <li><a href="11-openmediavault.html">OpenMediaVault</a></li>
+            <li><a href="12-virtualmachines.html">Virtual Machines</a></li>
+            <li><a href="13-docker.html">Docker</a></li>
+            <li><a href="14-igpupassthrough.html">iGPU Passthrough</a></li>
+            <li><a href="15-backups.html">Backups</a></li>
+          </ul>
+        </div>
+        <div id="homelab-2to3of3">
+          <!-- Article starts here -->
+          <div class="hello">Installing Proxmox</div>
+          <div id="obsidian">
+            <h1>Description</h1>
+            <blockquote>
+              <p>
+                Proxmox Virtual Environment is a complete, open-source server management platform for enterprise
+                virtualization. It tightly integrates the KVM hypervisor and Linux Containers (LXC), software-defined
+                storage and networking functionality, on a single platform. With the integrated web-based user interface
+                you can manage VMs and containers, high availability for clusters, or the integrated disaster recovery
+                tools with ease.</p>
+            </blockquote>
+            <h1>BIOS Settings</h1>
+            <p>In the BIOS, ensure the below are enabled:</p>
+            <ul>
+              <li><code>Intel(R) Virtualization Technology</code></li>
+              <li><code>VT-d</code><br />
+                Personally I disable <code>CSM Support</code> and use UEFI exclusively.<br />
+                Additionally, I also like to tweak the machine for reduced power consumption:</li>
+              <li><code>C State Support</code> set to setting with highest level of C-State (e.g.,
+                <code>C1C3C6C7C8</code>).
+              </li>
+              <li>Disable <code>PxE</code> and <code>Wake on Lan</code></li>
+              <li>Enable <code>Enhanced Power Saving Mode</code></li>
+              <li>Disable all other <code>Wake on*</code> options</li>
+              <li>Enable <code>ASPM Support</code> for PCIe</li>
+            </ul>
+            <h1>Initial Setup</h1>
+            <p>The installation is straightforward, download the ISO, flash it to a USB drive using your tool of
+              choice, and if you get stuck, follow the instructions at <a
+                href="https://www.proxmox.com/en/proxmox-virtual-environment/get-started">Installation - Proxmox
+                Virtual Environment</a>.</p>
+
+            <p>On the first screen where choosing your <code>Target Harddisk</code>, click Options and reduce
+              <code>maxroot</code> to <code>32.0</code> (GiB). As the name suggests this will use 32GB for your root
+              volume, and the balance for <code>local-lvm</code>, which is where your containers and virtual machines
+              can be stored.
+            </p>
+            <p>Follow the rest of the steps in the wizard, and you should end up with the machine booting into the
+              command line with details showing what IP address and port you can access the web UI on. </p>
+            <p>This machine will now be a "Node" in your Proxmox environment. If you build more physical machines
+              running Proxmox VE, they will each be a node, which you could group together under one Proxmox Datacenter.
+            </p>
+            <h1>Storage</h1>
+            <p>Proxmox runs Debian under the hood, and thus has direct access to all the storage devices on your
+              machine. However, if you want to use external USB hard drives as storage, you will have to manually mount
+              them in the CLI (and handle things like automount/mount at boot). As you might assume, Proxmox doesn't
+              particularly handle disconnected drives well.</p>
+            <p>If you have multiple drives in your system, you have the option to passthrough entire drive(s) to virtual
+              machines, e.g. if you're running a NAS in a Virtual Machine, such as OpenMediaVault. </p>
+            <h2><code>local</code> vs <code>local-lvm</code></h2>
+            <p><code>local</code> is folder where you can store ISO images, backups of containers/VMs, templates, and
+              other files. <code>local-lvm</code> is a thin provisioned volume where you can store container and VM
+              volumes that act as virtual hard drives inside the guest. In practice, you'll place an Installer ISO in
+              <code>local</code>, and the guest's virtual <code>C:\</code> drive on <code>local-lvm</code>.
+            </p>
+            <h1>Authentication</h1>
+            <p>Later on you'll want to create additional users to separate privileges. In particular, running commands
+              remotely using the API, and using the mobile app will require API tokens. For this I'd highly recommend
+              creating separate users instead of using the root account.</p>
+            <h2>PVE Users</h2>
+            <p>When creating a new user, you'll see an option where you can choose "Linux PAM standard authentication"
+              or "Proxmox VE authentication server". PAM uses the OS' user accounts (e.g., the ones you create in the
+              shell using <code>adduser</code>), whilst PVE accounts are specific to Proxmox. You'll want to choose the
+              latter so that Proxmox can manage the new account.</p>
+            <h2>API Tokens</h2>
+            <p>Each API Token is linked to a user. Something that I overlooked initially is that both the User Account
+              and the API Token need to be granted permissions. This will come in particularly handy if you make use of
+              SPICE to remotely access Linux Virtual Machines.</p>
+            <h2>Mobile App</h2>
+            <p>There is a mobile app that works much better on a smartphone than the web UI. I find it particularly
+              useful for (re)starting virtual machines that use GPU and USB passthrough, allowing you to use your
+              Proxmox server as a sort-of thin client to access a specific VM.</p>
+            <h1>Community Repositories</h1>
+            <ul>
+              <li><a href="https://pve.proxmox.com/wiki/Package_Repositories">Package Repositories - Proxmox VE</a></li>
+              <li>Comment out the two repos in:<ul>
+                  <li><code>/etc/apt/sources.list.d/ceph.list</code></li>
+                  <li><code>/etc/apt/sources.list.d/pve-enterprise.list</code></li>
+                </ul>
+              </li>
+              <li>Append the below line to the file <code>/etc/apt/sources.list</code>:<ul>
+                  <li><code>deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription</code></li>
+                </ul>
+              </li>
+              <li>Now you can run <code>apt update &amp;&amp; apt upgrade -y</code></li>
+            </ul>
+            <h1>See Also</h1>
+            <ul>
+            </ul>
+            <h1>External Links</h1>
+            <ul>
+              <li><a href="https://www.proxmox.com/en/proxmox-virtual-environment/overview">Proxmox Virtual Environment
+                  - Open-Source Server Virtualization Platform</a></li>
+            </ul>
+          </div>
+          <!-- Article ends here -->
+        </div>
+      </div>
+      <!-- Content ends here -->
+    </div>
+    <div id="footer">
+      <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+
+</html>

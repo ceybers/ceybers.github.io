@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>craige.dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../assets/stylesheet202401151605.css" />
+  <link rel="stylesheet" href="../assets/stylesheet-homelab.css" />
+</head>
+
+<body>
+  <div class="grid-container">
+    <div id="header">
+      <div id="navbar">
+        <div id="logo">craige.dev</div>
+        <div id="separator">|</div>
+        <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/keyboards">Keyboards</a></li>
+          <li><a class="current" href="#">Homelab</a></li>
+          <li><a href="/excelvba">Excel Add-ins</a></li>
+          <li><a href="/cv">Work</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+        <div class="spacer">&nbsp;</div>
+        <div id="corner">
+          <a href="https://github.com/ceybers">My GitHub</a>
+        </div>
+      </div>
+      <div id="title">Homelab Guides</div>
+    </div>
+    <div id="content">
+      <!-- Content starts here -->
+      <div id="homelab-3of3-container">
+        <div id="homelab-1to1of3">
+          <h3>Homelab Guides</h3>
+          <ul>
+            <li><a href="01-gettingstarted.html">Getting Started</a></li>
+            <li><a href="02-installingproxmox.html">Installing Proxmox</a></li>
+            <li><a class="current" href="#">SSH Authentication</a></li>
+            <li><a href="04-pihole.html">PiHole</a></li>
+            <li><a href="05-nginxproxymanager.html">nginx Proxy Manager</a></li>
+            <li><a href="06-tlssslcertificates.html">TLS/SSL Certificates</a></li>
+            <li><a href="07-gitea.html">Gitea</a></li>
+            <li><a href="08-lxccontainers.html">LXC Containers</a></li>
+            <li><a href="09-typicalcontainers.html">Typical Containers</a></li>
+            <li><a href="10-vaultwarden.html">Vault Warden</a></li>
+            <li><a href="11-openmediavault.html">OpenMediaVault</a></li>
+            <li><a href="12-virtualmachines.html">Virtual Machines</a></li>
+            <li><a href="13-docker.html">Docker</a></li>
+            <li><a href="14-igpupassthrough.html">iGPU Passthrough</a></li>
+            <li><a href="15-backups.html">Backups</a></li>
+          </ul>
+        </div>
+        <div id="homelab-2to3of3">
+          <!-- Article starts here -->
+          <div class="hello">SSH Authentication</div>
+          <div id="obsidian">
+            <h1>SSH Keys</h1>
+            <p>In this section we will setup SSH so we can connect from your workstation to your Proxmox server. You can
+              also use these as an authentication with public (e.g., Github) and your own private Git servers.</p>
+            <p>We will create a pair of SSH keys on your workstation: one private and one public. The private key is
+              used by your workstation to prove its identity, and must not be shared. </p>
+            <p>The public key's role is to be shared with other computers, such as your Proxmox server, who will use it
+              when connecting via SSH to check if it is indeed connected to your workstation and not an imposter.</p>
+            <h2>Creating a pair of SSH keys</h2>
+            <h3>Windows</h3>
+            <p>Open PowerShell and run the following command, following the prompts. Leave the passphrase empty.</p>
+            <pre><code class="PowerShell language-PowerShell">ssh-keygen -t ed25519</code></pre>
+            <p>You will now have two files in your SSH folder:</p>
+            <ul>
+              <li>a private named <code>id_ed25519</code>,</li>
+              <li>and a public SSH key named <code>id_ed25519.pub</code></li>
+            </ul>
+            <p>The location of your SSH folder is <code>.ssh</code> under <code>C:\Users\your-username</code>, which you
+              can conveniently access via <code>cd ~\.ssh</code></p>
+            <h3>Linux</h3>
+            <p>Open a shell and run the following command, following the prompts. Leave the passphrase empty.</p>
+            <pre><code class="bash language-bash">ssh-keygen -t ed25519</code></pre>
+            <p>You will now have two files in your SSH folder:</p>
+            <ul>
+              <li>a private named <code>id_ed25519</code>,</li>
+              <li>and a public SSH key named <code>id_ed25519.pub</code></li>
+            </ul>
+            <p>The location of your SSH folder is <code>.ssh</code> under <code>/home/your-username</code>, which you
+              can conveniently access via <code>cd ~/.ssh</code>.</p>
+            <p>Note that folders that start with a dot are hidden, and won't show by default using <code>ls</code>
+              unless you use the <code>-a</code> flag, e.g. <code>ls -a</code>. Also note the permissions: they should
+              default to <code>0600</code> for the private key and <code>0644</code> for the public key.</p>
+            <h2>Allowing SSH access into your Proxmox server</h2>
+            <p>Open the Proxmox Web UI, select your server from the Nodes tree item, then select <code>Shell</code> from
+              the list view. Next, cd into the <code>.ssh</code> folder, and edit the file called
+              <code>authorized_hosts</code>. Copy your <strong>public</strong> key you created above, and paste it at
+              the end of the file on a new line. Save and close.
+            </p>
+            <p>Each line in this file is a public key. The owners of the matching private key are allowed to connect to
+              this machine via SSH.</p>
+            <h2>Test connecting</h2>
+            <p>On your workstation, run the following command (with your setup's particulars):</p>
+            <pre><code class="PowerShell language-PowerShell">ssh root@192.168.100.2 -i ~\.ssh\id_ed25519 </code></pre>
+            <p>You should not get any prompt for a username or a password. </p>
+            <p>Additionally, if this is your first time connecting via SSH, you should get a prompt to trust the
+              <em>server's</em> certificate. Press Enter to continue. You should end up in a bash shell on your Proxmox
+              server.
+            </p>
+            <blockquote>
+              <h4>Example Messsage</h4>
+              The authenticity of host '192.168.100.2 (192.168.100.2)' can't be established.<br />
+              ED25519 key fingerprint is SHA256:B0aMj1fpf5pPnphE/nvAt+ri0vRL6BXie0+YEx2yWaA.<br />
+              This key is not known by any other names<br />
+              Are you sure you want to continue connecting (yes/no/[fingerprint])? yes<br />
+              Warning: Permanently added '192.168.100.2' (ED25519) to the list of known hosts.</p>
+            </blockquote>
+            <h1>SSH <code>config</code> file</h1>
+            <p>Now that it's working, we will create a file named <code>config</code> (no extension) in the
+              <code>.ssh</code> folder, e.g. <code>C:\Users\bob\.ssh\config</code>. If you're using Notepad, double
+              check that it hasn't automatically added a <code>.txt</code> extension to the end.
+            </p>
+            <p>Add the below contents to the file, substituting the particulars of your setup:</p>
+            <pre><code>Host *
+  IdentityFile C:\Users\User\.ssh\id_ed25519
+  IdentitiesOnly yes
+Host proxmox
+  HostName 192.168.100.2
+  User root
+</code></pre>
+            <p>Now when we run <code>ssh proxmox</code>, it will look for that named Host in the config file, and use
+              the settings, i.e., the username, the IP address, and the SSH keys.</p>
+            <h1>Allowing SSH access into containers/VMs</h1>
+            <p>The same method applies when setting up containers or VM for SSH access. If you run into difficult, check
+              the <code>/etc/ssh/sshd_config</code> file to see if there are any options that might be preventing you
+              from using SSH. The default settings should allow you to login as root via public key authentication.</p>
+            <h1>Copying files using <code>scp</code></h1>
+            <p>A benefit of using <code>ssh</code> that wasn't obvious to me at first is that is that you can use
+              <code>scp</code> to copy files over a SSH connection. This lets you copy files to and from the connected
+              machine without having to fuss around with Samba or NFS shares.
+            </p>
+            <p>If you can connect via <code>ssh</code>, then you should be able to use the following in either your
+              workstation or your Proxmox server's terminal:</p>
+            <pre><code>scp ~\some_local_file user@remote:C:\Users\User\Desktop\now_a_remote_file
+scp user@remote:C:\Users\User\Desktop\a_remote_file ~\now_its_a_local_file</code></pre>
+            <p>You can also use wildcards and recursion. For more info, see the docs: <a
+                href="https://man7.org/linux/man-pages/man1/scp.1.html">scp(1) - Linux manual page</a>. </p>
+            <p>If you need to transfer a large amount of files or folders, you might want to tar and zip first. tl;dr:
+            </p>
+            <ul>
+              <li><code>tar cf file.tar ./folder</code> To tar a folder into a file (c for create)</li>
+              <li><code>tar xf file.tar</code> To extract a tar file to a folder (x for extract)</li>
+            </ul>
+            <h1>Further Reading</h1>
+            <p>Once you're familiar with using asymmetric keys for authentication, you might want to consider using SSH
+              certificates for authentication. In this setup, your hosts and clients trust a Certificate Authority, who
+              then signs the public keys of the respective machines. Instead of having to approve and keep individual
+              keys for each host or client, you delegate the trust to your Certificate Authority.</p>
+            <p>If this sounds confusing, you might want to wait until after you've set up and are comfortable with
+              <a href="06-tlssslcertificates.html">TLS/SSL Certificates</a> later in this guide.</p>
+            <p>If it doesn't, then here are some links for further reading:</p>
+            <ul>
+              <li><a href="https://bash-prompt.net/guides/ssh-certificates">A Simple Guide To Getting Started With SSH
+                  Certificates</a></li>
+              <li><a href="https://goteleport.com/blog/how-to-configure-ssh-certificate-based-authentication/">How to
+                  configure SSH Certificate-Based Authentication</a></li>
+              <li><a href="https://smallstep.com/blog/use-ssh-certificates/">If you’re not using SSH certificates you’re
+                  doing SSH wrong</a></li>
+              <li><a
+                  href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/sec-distributing_and_trusting_ssh_ca_public_keys">14.3.4.&nbsp;Distributing
+                  and Trusting SSH CA Public Keys Red Hat Enterprise Linux 6 | Red Hat Customer Portal</a></li>
+            </ul>
+            <h1>See also</h1>
+            <ul>
+              <li><a href="07-gitea.html">Gitea</a></li>
+            </ul>
+          </div>
+          <!-- Article ends here -->
+        </div>
+      </div>
+      <!-- Content ends here -->
+    </div>
+    <div id="footer">
+      <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+
+</html>

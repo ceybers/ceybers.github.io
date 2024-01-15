@@ -14,7 +14,7 @@
     --blue: #268bd2;
     --cyan: #2aa198;
     --serif: "Lora";
-    --sansserif: sans-serif;
+    --sansserif: 'sans-serif';
 }
 
 * {
@@ -43,6 +43,10 @@ LI {
 
 P {
     line-height: 1.5em;
+}
+
+B { 
+    color: var(--green);
 }
 
 DIV.grid-container {
@@ -337,4 +341,13 @@ DIV.img-caption>A:Hover>DIV.caption {
 DIV.hello {
     text-align: center;
     font-size: 125%;
+    font-family: var(--serif);
+}
+
+DIV#navbar>UL.nav>LI>A.current {
+    border-bottom: 6px solid var(--green);
+}
+
+DIV#navbar>UL.nav>LI>A.current:Hover {
+    background-color: var(--green);
 }

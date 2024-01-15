@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>craige.dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../assets/stylesheet202401151605.css" />
+  <link rel="stylesheet" href="../assets/stylesheet-homelab.css" />
+</head>
+
+<body>
+  <div class="grid-container">
+    <div id="header">
+      <div id="navbar">
+        <div id="logo">craige.dev</div>
+        <div id="separator">|</div>
+        <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/keyboards">Keyboards</a></li>
+          <li><a class="current" href="#">Homelab</a></li>
+          <li><a href="/excelvba">Excel Add-ins</a></li>
+          <li><a href="/cv">Work</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+        <div class="spacer">&nbsp;</div>
+        <div id="corner">
+          <a href="https://github.com/ceybers">My GitHub</a>
+        </div>
+      </div>
+      <div id="title">Homelab Guides</div>
+      <div id="wall">Work in Progress</div>
+    </div>
+    <div id="content">
+      <!-- Content starts here -->
+      <div id="homelab-3of3-container">
+        <div id="homelab-1to1of3">
+          <h3>Homelab Guides</h3>
+          <ul>
+            <li><a href="01-gettingstarted.html">Getting Started</a></li>
+            <li><a href="02-installingproxmox.html">Installing Proxmox</a></li>
+            <li><a href="03-sshauthentication.html">SSH Authentication</a></li>
+            <li><a href="04-pihole.html">PiHole</a></li>
+            <li><a href="05-nginxproxymanager.html">nginx Proxy Manager</a></li>
+            <li><a href="06-tlssslcertificates.html">TLS/SSL Certificates</a></li>
+            <li><a href="07-gitea.html">Gitea</a></li>
+            <li><a class="current" href="#">LXC Containers</a></li>
+            <li><a href="09-typicalcontainers.html">Typical Containers</a></li>
+            <li><a href="10-vaultwarden.html">Vault Warden</a></li>
+            <li><a href="11-openmediavault.html">OpenMediaVault</a></li>
+            <li><a href="12-virtualmachines.html">Virtual Machines</a></li>
+            <li><a href="13-docker.html">Docker</a></li>
+            <li><a href="14-igpupassthrough.html">iGPU Passthrough</a></li>
+            <li><a href="15-backups.html">Backups</a></li>
+          </ul>
+        </div>
+        <div id="homelab-2to3of3">
+          <!-- Article starts here -->
+          <div class="hello">LXC Containers</div>
+          <div id="obsidian">
+
+            <h1>Description</h1>
+            <h1>Download a container template</h1>
+            <ul>
+              <li>In the Proxmox UI, navigate to your <code>local</code> storage, then select <code>CT Templates</code>
+                from the list view. Press the <code>Templates</code> button on the ribbon, then browse through the list
+                and choose a Linux distro, such as <code>debian-12-standard</code></li>
+            </ul>
+            <h1>Creating a container</h1>
+            <ul>
+              <li>Click <code>Create CT</code> on the top right corner of the screen.</li>
+              <li>Give it a CT ID, a Hostname, and a password. Press the Load Public SSH key, and upload your
+                workstation's public SSH key (e.g., <code>C:\Users\User\.ssh\id_ed25519.pub</code>)</li>
+              <li>Follow the rest of the wizard. Set a static IP under Networks, such as
+                <code>192.168.100.102/24</code>.
+              </li>
+              <li>Press Finish, wait for it to be created, then Start the container.</li>
+              <li>In the list view select "Console". You should have a login prompt. Enter root as the user name and the
+                password you used.</li>
+              <li>You now have a working containerised Linux environment.</li>
+            </ul>
+            <h2>Mountpoints</h2>
+            <ul>
+              <li>In the Proxmox UI, navigate to your container, then select <code>Resources</code> in the list view,
+                then click <code>Add</code> on the ribbon and choose <code>Mount Point</code>.</li>
+              <li>Enter a path that this volume will appear as inside of the container, e.g. <code>/mnt/test</code></li>
+              <li>Head back to your SSH session, navigate to the path, and you should see a new volume.</li>
+              <li>You can use the mount command to verify, e.g.:</li>
+            </ul>
+            <pre><code class="bash language-bash">mount | grep test
+/dev/mapper/pve-vm--201--disk--1 on /mnt/test type ext4 (rw,relatime,stripe=16)</code></pre>
+            <h1>Accessing a container</h1>
+            <h2>Proxmox web UI</h2>
+            <p>As listed above, you can access any container via the Console menu option.</p>
+            <h2>Proxmox CLI</h2>
+            <p>If you're in the CLI of the Proxmox server, you can also use the <code>pct enter &lt;CT_ID&gt;</code>
+              command to access a container. e.g.:</p>
+            <pre><code class="bash language-bash">root@proxmox:~ # pct list
+VMID       Status     Lock         Name
+101        running                 foobar
+
+root@proxmox:~ # pct enter 101
+root@foobar:/#</code></pre>
+            <h2>SSH</h2>
+            <p>If you uploaded your public SSH key during creation, you can also connect via SSH, e.g.:</p>
+            <pre><code class="PowerShell language-PowerShell">ssh root@192.168.8.102 -i ~\.ssh\id_ed25519</code></pre>
+            <p>As mentioned earlier, it is convenient to place the IP address in your SSH config file so that you can
+              connect via just a SSH Host name.</p>
+            <h1>When to use a Container vs VM</h1>
+            <h1>Nesting (Docker)</h1>
+            <h1>Network mounts (SMB and NFS)</h1>
+            <ul>
+              <li>And using the above in the host and using Mount Points.</li>
+            </ul>
+            <h1>See Also</h1>
+            <h1>External Links</h1>
+
+          </div>
+          <!-- Article ends here -->
+        </div>
+      </div>
+      <!-- Content ends here -->
+    </div>
+    <div id="footer">
+      <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+
+</html>

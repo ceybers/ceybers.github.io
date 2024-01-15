@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>craige.dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../assets/stylesheet202401151605.css" />
+  <link rel="stylesheet" href="../assets/stylesheet-homelab.css" />
+</head>
+
+<body>
+  <div class="grid-container">
+    <div id="header">
+      <div id="navbar">
+        <div id="logo">craige.dev</div>
+        <div id="separator">|</div>
+        <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/keyboards">Keyboards</a></li>
+          <li><a class="current" href="#">Homelab</a></li>
+          <li><a href="/excelvba">Excel Add-ins</a></li>
+          <li><a href="/cv">Work</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+        <div class="spacer">&nbsp;</div>
+        <div id="corner">
+          <a href="https://github.com/ceybers">My GitHub</a>
+        </div>
+      </div>
+      <div id="title">Homelab Guides</div>
+    </div>
+    <div id="content">
+      <!-- Content starts here -->
+      <div id="homelab-3of3-container">
+        <div id="homelab-1to1of3">
+          <h3>Homelab Guides</h3>
+          <ul>
+            <li><a href="01-gettingstarted.html">Getting Started</a></li>
+            <li><a href="02-installingproxmox.html">Installing Proxmox</a></li>
+            <li><a href="03-sshauthentication.html">SSH Authentication</a></li>
+            <li><a class="current" href="#">PiHole</a></li>
+            <li><a href="05-nginxproxymanager.html">nginx Proxy Manager</a></li>
+            <li><a href="06-tlssslcertificates.html">TLS/SSL Certificates</a></li>
+            <li><a href="07-gitea.html">Gitea</a></li>
+            <li><a href="08-lxccontainers.html">LXC Containers</a></li>
+            <li><a href="09-typicalcontainers.html">Typical Containers</a></li>
+            <li><a href="10-vaultwarden.html">Vault Warden</a></li>
+            <li><a href="11-openmediavault.html">OpenMediaVault</a></li>
+            <li><a href="12-virtualmachines.html">Virtual Machines</a></li>
+            <li><a href="13-docker.html">Docker</a></li>
+            <li><a href="14-igpupassthrough.html">iGPU Passthrough</a></li>
+            <li><a href="15-backups.html">Backups</a></li>
+          </ul>
+        </div>
+        <div id="homelab-2to3of3">
+          <!-- Article starts here -->
+          <div class="hello">PiHole</div>
+          <div id="obsidian">
+
+            <h1>Description</h1>
+            <p>Now that we have Proxmox up and running, we can start creating Containers and Virtual Machines. Our first
+              Container will be running <a href="#todo">PiHole</a>. </p>
+            <p>This is because not only can we use it to block ads, since we will be using it in place of our normal DNS
+              nameserver, it is the perfect place to let all the devices on our network more easily access our homelab
+              services via domain names instead of remembering IP addresses.</p>
+            <h1>Installation</h1>
+            <h2>Download LXC Templates</h2>
+            <ul>
+              <li>In the Proxmox web UI, navigate to your node's <code>local</code> storage in the tree view on the
+                left. e.g., if you're using Server View: <code>Datacenter</code> &gt; <code>your node name</code> &gt;
+                <code>local</code> , and if you're using Folder View: <code>Datacenter</code> &gt; <code>Storage</code>
+                &gt; <code>local</code>
+              </li>
+              <li>Select <code>CT Templates</code> in the list view in the middle of the screen, then click the
+                <code>Templates</code> button on the ribbon in the details pane on the right.
+              </li>
+              <li>Pick a flavour of Linux to download. For this guide I'll use Debian 12.</li>
+            </ul>
+            <h2>Create new LXC</h2>
+            <ul>
+              <li>Once the ISO for your Linux distro has downloaded, click the <code>Create CT</code> button in the top
+                right corner.</li>
+              <li>Follow the wizard.<ul>
+                  <li>In the Network tab, note that under <code>IPv4/CIDR</code> you need to specify the IP address in
+                    CIDR notation, e.g., <code>192.168.100.3/24</code>.</li>
+                </ul>
+              </li>
+              <li>It should create your container, which you can then Start.</li>
+              <li>First, run <code>apt update &amp;&amp; apt upgrade -y</code></li>
+              <li>Next, to install PiHole, run <code>curl -sSL https://install.pi-hole.net | bash</code>
+                <ul>
+                  <li>Note: Remember, running scripts blindly from the internet is risky.</li>
+                </ul>
+              </li>
+              <li>Again, follow the wizard.</li>
+              <li>Once you've installed it, run <code>sudo pihole -a -p</code> to set your own password for the Web GUI.
+              </li>
+              <li>Lastly, set the container to auto start. Select the container in the Proxmox web UI, select
+                <code>Options</code> in the list view, then on the right pane change the setting for
+                <code>Start at Boot</code> to enabled.
+              </li>
+            </ul>
+            <h2>Test and Compare</h2>
+            <p>Now that your PiHole instance is running, we can test to see how well it works. On your workstation, open
+              a tab in your browser and visit a notoriously ad-heavy website, such as <code>www.msn.com</code>. </p>
+            <p>Then, change the DNS Nameserver on your workstation to the IP address of your PiHole instance. On Windows
+              you can run <code>ncpa.cpl</code> which will display the Network Connections window. On Linux you can edit
+              the file <code>/etc/resolv.conf</code>. Replace the existing DNS server: your OS will use both of them,
+              not just the first, so if one of them is not an adblocking one, some ads will still get through.</p>
+            <p>Once that is done, open a second tab and visit the same site, and compare the difference. There should be
+              a remarkable reduction in adverts. You can also visit your PiHole web UI to see how many requests it has
+              blocked.</p>
+            <h1>Local DNS</h1>
+            <p>We can connect to web UI's like Proxmox, PiHole, and the future services we'll create using their IP
+              address and port number. This is however not very convenient, so we'll set up PiHole to let us use domain
+              names instead.</p>
+            <p>Best practice is to register an actual domain name and get a certificate from an actual Root Certificate
+              Authority (e.g., LetsEncrypt). While what we will be doing next is not best practice, it is entirely
+              possible for you to use whatever domain name you want on your homelab. </p>
+            <p>There are pros and cons to this approach which others have discussed ad nauseum and I won't delve into
+              those. Many people suggest using the reserved TLD suffix <code>.home.arpa</code>, but personally I find it
+              to cumbersome, and I just use <code>foobar.box</code> instead. This is a home<em>lab</em> after all, so
+              let's experiment.</p>
+            <h1>DNS <code>[A/AAAA]</code> and CNAME Records</h1>
+            <p>A (and AAAA) records map a domain name to an IP address (AAAA being for IPv6). CNAMEs forward a domain or
+              subdomain to another domain.</p>
+            <p>So if we set our workstation to use our PiHole as its DNS nameserver, and we create a Local A Record that
+              maps <code>proxmox.box</code> to <code>192.168.100.2</code>, instead of typing
+              <code>https://192.168.100.2:8006</code>, we can type <code>https://proxmox.box:8006</code>.
+            </p>
+            <p>You'll notice this only maps IP addresses - we cannot use this to map port numbers. In the next section,
+              we'll set up a Reverse Proxy, which will do just that.</p>
+            <h2>CNAME Records</h2>
+            <p>As you create more services, you'll might want to access them via names such as
+              <code>foo.proxmox.box</code> and <code>bar.proxmox.box</code>. While we can create a new CNAME record for
+              each individual subdomain, I personally find it more convenient to use a wildcard subdomain. This requires
+              you to use DNS Masquerading instead of CNAME records.
+            </p>
+            <h2><code>dnsmasq</code></h2>
+            <p>Before we can get this method to work, we need a working Reverse Proxy. The Reverse Proxy will look at
+              the URL and decide which entry to redirect the request to. So follow the steps in the next section, then
+              return here.</p>
+            <p>Once nginx Proxy Manager has been set up, we need to update <code>etc-dnsmasq</code>. Unfortunately we
+              cannot do this from the PiHole web UI. So instead, open the Proxmox Web UI, locate your PiHole container,
+              access it via <code>Shell</code>. </p>
+            <p>Once you are logged in, create a file named:</p>
+            <pre><code class="bash language-bash">/home/pastry/docker/pihole/etc-dnsmasq.d/02-local-wildcard-domain.conf</code></pre>
+            <p>If you are not familiar with <code>*.d</code> folders, they store multiple configuration files that the
+              command with the same name will reference. This lets us split and separate configuration files. In this
+              case, we'll be adding all our changes into one file. The name doesn't matter, just the path and extension.
+            </p>
+            <p>The contents of this file are the domain whose subdomains you want to redirect, and the IP of the Reverse
+              Proxy:</p>
+            <pre><code>address=/proxmox.box/192.168.100.4</code></pre>
+            <p>This will redirect all requests of <code>*.proxmox.box</code> to our Reverse Proxy, who will then find
+              the destination. Note that you don't need to include the <code>*.</code> part of
+              <code>*.proxmox.box</code>. Remember to double check that you're using the IP address of your Reverse
+              Proxy and not the the IP address of any of the services you want to redirect to.
+            </p>
+            <h1>See Also</h1>
+            <ul>
+              <li><a href="05-nginxproxymanager.html">nginx Proxy Manager</a></li>
+            </ul>
+            <h1>External Links</h1>
+            <ul>
+              <li><a href="https://pi-hole.net/">Pi-hole – Network-wide Ad Blocking</a></li>
+              <li><a href="https://docs.pi-hole.net/">Overview of Pi-hole - Pi-hole documentation</a></li>
+              <li><a href="https://github.com/pi-hole">Pi-hole · GitHub</a></li>
+            </ul>
+
+          </div>
+          <!-- Article ends here -->
+        </div>
+      </div>
+      <!-- Content ends here -->
+    </div>
+    <div id="footer">
+      <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+
+</html>

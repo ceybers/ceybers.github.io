@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>craige.dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../assets/stylesheet202401151605.css" />
+  <link rel="stylesheet" href="../assets/stylesheet-homelab.css" />
+</head>
+
+<body>
+  <div class="grid-container">
+    <div id="header">
+      <div id="navbar">
+        <div id="logo">craige.dev</div>
+        <div id="separator">|</div>
+        <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/keyboards">Keyboards</a></li>
+          <li><a class="current" href="#">Homelab</a></li>
+          <li><a href="/excelvba">Excel Add-ins</a></li>
+          <li><a href="/cv">Work</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+        <div class="spacer">&nbsp;</div>
+        <div id="corner">
+          <a href="https://github.com/ceybers">My GitHub</a>
+        </div>
+      </div>
+      <div id="title">Homelab Guides</div>
+    </div>
+    <div id="content">
+      <!-- Content starts here -->
+      <div id="homelab-3of3-container">
+        <div id="homelab-1to1of3">
+          <h3>Homelab Guides</h3>
+          <ul>
+            <li><a href="01-gettingstarted.html">Getting Started</a></li>
+            <li><a href="02-installingproxmox.html">Installing Proxmox</a></li>
+            <li><a href="03-sshauthentication.html">SSH Authentication</a></li>
+            <li><a href="04-pihole.html">PiHole</a></li>
+            <li><a class="current" href="#">nginx Proxy Manager</a></li>
+            <li><a href="06-tlssslcertificates.html">TLS/SSL Certificates</a></li>
+            <li><a href="07-gitea.html">Gitea</a></li>
+            <li><a href="08-lxccontainers.html">LXC Containers</a></li>
+            <li><a href="09-typicalcontainers.html">Typical Containers</a></li>
+            <li><a href="10-vaultwarden.html">Vault Warden</a></li>
+            <li><a href="11-openmediavault.html">OpenMediaVault</a></li>
+            <li><a href="12-virtualmachines.html">Virtual Machines</a></li>
+            <li><a href="13-docker.html">Docker</a></li>
+            <li><a href="14-igpupassthrough.html">iGPU Passthrough</a></li>
+            <li><a href="15-backups.html">Backups</a></li>
+          </ul>
+        </div>
+        <div id="homelab-2to3of3">
+          <!-- Article starts here -->
+          <div class="hello">nginx Proxy Manager</div>
+          <div id="obsidian">
+            <h1>Description</h1>
+            <p>Now that we have PiHole set up, we will set up a Reverse Proxy. Using these two services together, we can
+              resolve names like <code>foo.proxmox.box</code> and <code>bar.proxmox.box</code> to IP address and port
+              number combinations, such as <code>https://192.168.100.2:8006</code>. </p>
+            <p>Once we've got the basics set up, we'll add the ability to use <code>https</code> as well.</p>
+            <h1>Installation</h1>
+            <ul>
+              <li>Select your node in the Proxmox web UI</li>
+              <li>Select <code>&gt;_ Shell</code> on the ribbon on the details pane to open it in a new window.</li>
+              <li>To create a suitable container, we'll use a community script by a user named tteck.<ul>
+                  <li>Visit <a href="https://tteck.github.io/Proxmox/">Proxmox VE Helper-Scripts | Scripts for
+                      Streamlining Your Homelab with Proxmox VE</a> and search for the "nginx Proxy Manager" script.
+                  </li>
+                  <li>Read the instructions and understand the risks.</li>
+                  <li>Run the install command.</li>
+                </ul>
+              </li>
+              <li>Follow the wizard, and remember to assign a static IP.</li>
+              <li>Once it is done, you can access its Web UI on port 81.</li>
+            </ul>
+            <h1>Create a Proxy Host</h1>
+            <p>Once you've logged in to the nginx web UI and set up your username and password, select the
+              <code>Hosts</code> tab then choose <code>Proxy Hosts</code>. On the right of the screen is a button
+              labelled <code>Add Proxy Host</code>.
+            </p>
+            <ul>
+              <li>Domain Names: <code>pihole.proxmox.box</code>
+                <ul>
+                  <li>Note that you need to click the "Add pihole.proxmox.box" list item in the dropdown to make it
+                    commit a new name.</li>
+                </ul>
+              </li>
+              <li>Scheme: <code>http</code></li>
+              <li>Forward Hostname / IP: <code>192.168.100.3</code></li>
+              <li>Forward Port: <code>80</code></li>
+              <li>Click <code>Save</code></li>
+              <li>Now try navigating to: <a href="http://pihole.proxmox.box/admin">http://pihole.proxmox.box/admin</a>
+              </li>
+            </ul>
+            <h1>Using SSL Certificates</h1>
+            <p>Now that we have a HTTP Proxy Host working, we'll create a TLS/SSL Certificate so we can create HTTPS
+              Proxy Hosts. Head on to the next section. </p>
+            <p>Once you have your wildcard certificate and private key, we can add it in nginx Proxy Manager.</p>
+            <ul>
+              <li>In the nginx Proxy Manager web UI, navigate to the <code>SSL Certificates</code> tab.</li>
+              <li>Click the <code>Add SSL Certificate</code> button in the top right corner and choose
+                <code>Custom</code> in the dropdown menu (don't click the <code>Add SSL Certificate button</code> in the
+                middle of the screen).
+              </li>
+              <li>Enter a name, choose the file for the certificate key, and then the file for the signed certificate
+              </li>
+            </ul>
+            <h3>Testing</h3>
+            <ul>
+              <li>Go back to <code>Proxy Hosts</code>, then edit your existing Proxy Host for
+                <code>pihole.proxmox.box</code>
+              </li>
+              <li>Go to the <code>SSL</code> tab, and select your SSL certificate. Select <code>Force SSL</code>, then
+                save.</li>
+              <li>Now try navigating to <a href="https://pihole.proxmox.box/admin">https://pihole.proxmox.box/admin</a>
+              </li>
+              <li>It should load without any certificate errors or warnings, and it should show a padlock icon in the
+                address bar.</li>
+              <li>If you add a Proxy Host for the Proxmox web UI, note that you need to redirect to <code>https</code>
+                and not <code>http</code> on the <code>Details</code> tab. If you use <code>http</code> you'll get the
+                "Too Many Redirects" error message.</li>
+              <li>Many services require you to enable <code>Websockets Support</code>, so I'd suggest enabling that when
+                you create new Hosts.</li>
+            </ul>
+            <h1>See Also</h1>
+            <h1>External Links</h1>
+            <ul>
+              <li><a href="https://tteck.github.io/Proxmox/">Proxmox VE Helper-Scripts | Scripts for Streamlining Your
+                  Homelab with Proxmox VE</a></li>
+              <li><a href="https://github.com/tteck/Proxmox">GitHub - tteck/Proxmox: Proxmox VE Helper-Scripts</a></li>
+            </ul>
+
+          </div>
+          <!-- Article ends here -->
+        </div>
+      </div>
+      <!-- Content ends here -->
+    </div>
+    <div id="footer">
+      <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+
+</html>
