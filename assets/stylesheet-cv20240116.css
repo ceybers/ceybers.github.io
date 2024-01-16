@@ -110,12 +110,7 @@ DIV#case-3of3-container>DIV.case-1of3>P {
         border-radius: 16px 0 0 16px;
     }
 
-
     DIV.cv-2to3of3 {
         border-radius: 0 16px 16px 0;
-    }
-
-    DIV#cv-3of3-singleton {
-        zwidth: 70vw;
     }
 }

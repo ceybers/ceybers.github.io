@@ -176,7 +176,6 @@ UL.nav>LI>A:Hover {
     padding-left: 1em;
 }
 
-
 #corner {
     display: flex;
     justify-content: flex-end;
@@ -210,6 +209,7 @@ UL.nav>LI>A:Hover {
 
 #sidebarlayout-container {
     display: grid;
+    align-content: start;
     grid-template-columns: 1fr 4fr;
     min-height: 100%;
 }
@@ -345,12 +345,14 @@ DIV.fouritems DIV.img-caption {
 }
 
 @media only screen and (min-width: 992px) {
+    
     #sidebarlayout-content {
         align-content: start;
         grid-template-columns: 10vw auto 10vw;
     }
 
     #sidebarlayout-container.no-sidebar {
+        
         grid-template-columns: 1em auto 1em;
     }
 
