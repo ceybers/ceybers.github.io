@@ -2,13 +2,13 @@
 <html>
 
 <head>
-  <title>craige.dev</title>
+  <title>iGPU Passthrough | Homelab Guides | craige.dev</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
-    <link rel="stylesheet" href="../assets/stylesheet20240116.css" />
+  <link rel="stylesheet" href="../assets/stylesheet20240116.css" />
 </head>
 
 <body>
@@ -16,22 +16,24 @@
     <div id="header">
       <div id="navbar">
         <div id="logo">craige.dev</div>
-        <div id="separator">|</div>
-        <ul class="nav">
-          <li><a href="/">Home</a></li>
-          <li><a href="/keyboards">Keyboards</a></li>
-          <li><a class="current" href="#">Homelab</a></li>
-          <li><a href="/excelvba">Excel Add-ins</a></li>
-          <li><a href="/cv">Work</a></li>
-          <li><a href="/about">About</a></li>
-        </ul>
+        <div class="spacer">&nbsp;</div>
+        <div id="navbarbuttons">
+          <ul class="nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/keyboards">Keyboards</a></li>
+            <li><a class="current" href="#">Homelab</a></li>
+            <li><a href="/excelvba">Excel Add-ins</a></li>
+            <li><a href="/cv">Work</a></li>
+            <li><a href="/about">About</a></li>
+          </ul>
+        </div>
         <div class="spacer">&nbsp;</div>
         <div id="corner">
           <a href="https://github.com/ceybers">My GitHub</a>
         </div>
       </div>
-      <div id="title">Homelab Guides</div>
     </div>
+
     <div id="content">
       <!-- Content starts here -->
       <div id="sidebarlayout-container">
@@ -104,7 +106,8 @@
               being the vendor ID for Intel, and <code>1912</code> being the device ID for this particular iGPU.</p>
             <h2>Enable IOMMU in GRUB</h2>
             <p>Open the file <code>/etc/default/grub</code>, find the line starting with
-              <code>GRUB_CMDLINE_LINUX_DEFAULT</code>, and append the flag <code>intel_iommu=on</code> to the end. </p>
+              <code>GRUB_CMDLINE_LINUX_DEFAULT</code>, and append the flag <code>intel_iommu=on</code> to the end.
+            </p>
             <p>Before (example):</p>
             <pre><code>GRUB_CMDLINE_LINUX_DEFAULT="quiet"</code></pre>
             <p>After:</p>
@@ -132,7 +135,8 @@
               </li>
               <li>Install the OS. Once you have a working desktop environment, shut down the VM.</li>
               <li>In the Proxmox web UI, navigate to the VM, select Hardware from the list view, click the
-                <code>Add</code> button, and select <code>PCI Device</code>.</li>
+                <code>Add</code> button, and select <code>PCI Device</code>.
+              </li>
               <li>Select the radio button <code>Raw Device</code> if it is present, then change the Device dropdown to
                 the entry for your iGPU. The checkboxes can remain on their defaults.</li>
               <li>Repeat the process for your USB Host Controller (or USB devices if you choose that method).</li>
@@ -183,7 +187,8 @@
             <h2>Adding iGPU Passthrough to the VM</h2>
             <ul>
               <li>In your Proxmox CLI, navigate to the folder storing your VM configuration files and open the
-                <code>.conf</code> file for your VM, e.g. <code>/etc/pve/nodes/comet/qemu-server/101.conf</code></li>
+                <code>.conf</code> file for your VM, e.g. <code>/etc/pve/nodes/comet/qemu-server/101.conf</code>
+              </li>
               <li>Add the three following lines:</li>
             </ul>
             <pre><code>args: -device vfio-pci,host=00:02.0,x-igd-opregion=on,x-igd-gms=1
@@ -192,7 +197,8 @@ vga: none</code></pre>
               <li>The first line tells Proxmox to passthrough the iGPU device at ID <code>00:02.0</code>. The
                 <code>opregion</code> setting enable OpRegion support which enables physical video out. The
                 <code>gms</code> setting allocates a small amount of RAM which seems to be necessary for OpRegion to
-                work.</li>
+                work.
+              </li>
               <li>The second line disables the Proxmox standard virtualised display as it would occupy the same address
                 in the VM as the iGPU, preventing the VM from starting.</li>
               <li>Save and close the file.</li>
@@ -208,7 +214,8 @@ vga: none</code></pre>
             <ul>
               <li>The steps are similar to Windows 10. The main difference is that by default, Proxmox will default to
                 the <code>q35</code> machine type and a <code>OVMF</code>UEFI instead of <code>i440fx</code> and
-                <code>SeaBIOS</code>. Windows 11 <em>can</em> work without UEFI and TPM, we just need to bypass it.</li>
+                <code>SeaBIOS</code>. Windows 11 <em>can</em> work without UEFI and TPM, we just need to bypass it.
+              </li>
               <li>During VM creation, change the machine type to <code>i440fx</code>, the BIOS to <code>SeaBIOS</code>
                 and disable <code>TPM</code>.</li>
               <li>Start the VM</li>
@@ -220,7 +227,8 @@ vga: none</code></pre>
               <li>Open <code>regedit</code>. Navigate to <code>HKEY_LOCAL_MACHINE\SYSTEM\Setup</code> and create a key
                 (i.e. folder) named <code>LabConfig</code>.</li>
               <li>Create two DWORD (32-bit) entries, one named <code>BypassSecureBootCheck</code> and the second named
-                <code>BypassTPMCheck</code>. Set their values to <code>1</code>. </li>
+                <code>BypassTPMCheck</code>. Set their values to <code>1</code>.
+              </li>
               <li>Close <code>regedit</code> and the command prompt, and continue the installation.</li>
               <li>The setup wizard should continue.</li>
               <li>The rest of the steps are the same as for the Windows 10 VM.</li>

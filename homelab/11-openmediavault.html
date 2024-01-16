@@ -2,13 +2,13 @@
 <html>
 
 <head>
-  <title>craige.dev</title>
+  <title>OpenMediaVault | Homelab Guides | craige.dev</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
-    <link rel="stylesheet" href="../assets/stylesheet20240116.css" />
+  <link rel="stylesheet" href="../assets/stylesheet20240116.css" />
 </head>
 
 <body>
@@ -16,24 +16,26 @@
     <div id="header">
       <div id="navbar">
         <div id="logo">craige.dev</div>
-        <div id="separator">|</div>
-        <ul class="nav">
-          <li><a href="/">Home</a></li>
-          <li><a href="/keyboards">Keyboards</a></li>
-          <li><a class="current" href="#">Homelab</a></li>
-          <li><a href="/excelvba">Excel Add-ins</a></li>
-          <li><a href="/cv">Work</a></li>
-          <li><a href="/about">About</a></li>
-        </ul>
+        <div class="spacer">&nbsp;</div>
+        <div id="navbarbuttons">
+          <ul class="nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/keyboards">Keyboards</a></li>
+            <li><a class="current" href="#">Homelab</a></li>
+            <li><a href="/excelvba">Excel Add-ins</a></li>
+            <li><a href="/cv">Work</a></li>
+            <li><a href="/about">About</a></li>
+          </ul>
+        </div>
         <div class="spacer">&nbsp;</div>
         <div id="corner">
           <a href="https://github.com/ceybers">My GitHub</a>
         </div>
       </div>
-      <div id="title">Homelab Guides</div>
-      <div id="wall">Work in Progress</div>
     </div>
+
     <div id="content">
+      <div id="wall">Work in Progress</div>
       <!-- Content starts here -->
       <div id="sidebarlayout-container">
         <div id="sidebarlayout-sidebar">
@@ -78,7 +80,8 @@
                   <li>The disk <code>scsi0</code> will be for your system volume. This won't be used to store any
                     storage data. We'll add the storage drive later.</li>
                   <li>Under the <code>CPU</code> tab, increase the number of Cores, and change Type to
-                    <code>host</code>.</li>
+                    <code>host</code>.
+                  </li>
                 </ul>
               </li>
               <li>Once the wizard is complete, navigate to the new VM in the tree view, then select <code>Console</code>
@@ -93,7 +96,8 @@
               <li>Log in to the web UI (the credentials are in the console login screen)</li>
               <li>Change your password</li>
               <li>Go to <code>Network</code> &gt; <code>Interfaces</code> &gt; <code>Interface 1</code> &gt;
-                <code>Edit</code> and give your device a static IP.</li>
+                <code>Edit</code> and give your device a static IP.
+              </li>
               <li>If you've never used OMV before, you'll notice that it will prompt you with a yellow banner to confirm
                 changes before applying them. You will have to do this whenever you make changes.</li>
             </ul>
@@ -164,7 +168,7 @@
             </ul>
             <h1>See Also</h1>
             <ul>
-              </ul>
+            </ul>
             <h1>External Links</h1>
             <ul>
               <li><a href="https://docs.openmediavault.org/en/latest/installation/index.html">Installation —

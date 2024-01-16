@@ -1,0 +1,121 @@
+.--cv-heading {
+    font-family: var(--font-serif);
+    font-size: 200%;
+    font-weight: 600;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+DIV#cv-3of3-singleton {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+}
+
+DIV.cv-3of3-container H3 {
+    margin-top: 0;
+}
+
+DIV.cv-3of3-container {
+    font-family: 'Noto Sans';
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    border-radius: 16px;
+    box-shadow: -0.05em -0.05em 8px #07364220, 0.15em 0.15em 8px #07364230;
+}
+
+DIV.cv-3of3-container DIV IMG {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+DIV.cv-3of3-container DIV P {
+    margin-bottom: 1em;
+}
+
+DIV.cv-1to1of3 {
+    padding: 1em;
+    grid-column: 1 / span 1;
+    background-color: #ffffff;
+    border-radius: 16px 0 0 16px;
+    display: none;
+}
+
+DIV.cv-2to3of3 {
+    padding: 2em;
+    grid-column: 2/ span 2;
+    background-color: #fefbef;
+    border-radius: 16px;
+}
+
+DIV.cv-1to2of3 {
+    padding: 2em;
+    grid-column: 1 / span 2;
+    background-color: #fefbef;
+    border-radius: 16px;
+}
+
+DIV.cv-3to3of3 {
+    padding: 1em;
+    grid-column: 3/ span 1;
+    background-color: #ffffff;
+    border-radius: 0 16px 16px 0;
+    display: none;
+}
+
+DIV#case-3of3-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 1em;
+}
+
+DIV#case-3of3-container>DIV.case-1of3 {
+    flex: 1 1 0;
+    padding: 0 2em 0 2em;
+}
+
+DIV#case-3of3-container>DIV.case-1of3>H3 {
+    font-size: 150%;
+    line-height: 1em;
+}
+
+DIV#case-3of3-container>DIV.case-1of3>P {
+    margin-bottom: 1em;
+}
+
+@media only screen and (min-width: 992px) {
+    DIV#case-3of3-container {
+        flex-direction: row;
+    }
+
+    DIV#case-3of3-container>DIV.case-1of3 {
+        flex: 1 1 0;
+        width: 0;
+    }
+
+    DIV.cv-1to1of3,
+    DIV.cv-3to3of3 {
+        display: block;
+    }
+
+    DIV.cv-1to2of3 {
+        border-radius: 16px 0 0 16px;
+    }
+
+
+    DIV.cv-2to3of3 {
+        border-radius: 0 16px 16px 0;
+    }
+
+    DIV#cv-3of3-singleton {
+        zwidth: 70vw;
+    }
+}
