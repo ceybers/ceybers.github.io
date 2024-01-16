@@ -2,13 +2,14 @@
 <html>
 
 <head>
-  <title>craige.dev</title>
+  <title>Home | craige.dev</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="assets/stylesheet202401151605.css" />
+  <link rel="stylesheet" href="../assets/stylesheet20240116.css" />
 </head>
 
 <body>
@@ -16,7 +17,8 @@
     <div id="header">
       <div id="navbar">
         <div id="logo">craige.dev</div>
-        <div id="separator">|</div>
+        <div id="spacer">&nbsp;</div>
+        <div id="navbarbuttons">
         <ul class="nav">
           <li><a class="current" href="#">Home</a></li>
           <li><a href="/keyboards">Keyboards</a></li>
@@ -25,35 +27,45 @@
           <li><a href="/cv">Work</a></li>
           <li><a href="/about">About</a></li>
         </ul>
+      </div>
         <div class="spacer">&nbsp;</div>
         <div id="corner">
           <a href="https://github.com/ceybers">My GitHub</a>
         </div>
       </div>
-      <div id="title">Craig's Website</div>
     </div>
     <div id="content">
       <!-- Content starts here -->
-      <div class="hello">Hello, my name is Craig and I make things. Welcome to my portfolio website.</div>
-      
-      <div class="img-caption-container">
-        <div class="img-caption">
-          <a href="/keyboards">
-            <img SRC="images/20231126-IMG_1962.jpg" />
-            <div class="caption">Custom Keyboards</div>
-          </a>
+
+      <div id="sidebarlayout-container" class="no-sidebar">
+        <div id="sidebarlayout-sidebar">
+          <div id="title">Craig's Website</div>
         </div>
-        <div class="img-caption">
-          <a href="/homelab/01-gettingstarted.html">
-            <img SRC="images/DSCF2854.jpg" />
-            <div class="caption">Homelab Guides</div>
-          </a>
-        </div>
-        <div class="img-caption">
-          <a href="/excelvba">
-            <img SRC="images/excel-column-manager.png" />
-            <div class="caption">Excel Add-ins</div>
-          </a>
+        <div id="sidebarlayout-content">
+          <!-- Article starts here -->
+          <div id="obsidian">
+            <div class="--center">Hello, my name is Craig and I make things. Welcome to my portfolio website.</div>
+            <div class="img-caption-container">
+              <div class="img-caption">
+                <a href="/keyboards">
+                  <img SRC="images/20231126-IMG_1962.jpg" />
+                  <div class="caption">Custom Keyboards</div>
+                </a>
+              </div>
+              <div class="img-caption">
+                <a href="/homelab/01-gettingstarted.html">
+                  <img SRC="images/DSCF2854.jpg" />
+                  <div class="caption">Homelab Guides</div>
+                </a>
+              </div>
+              <div class="img-caption">
+                <a href="/excelvba">
+                  <img SRC="images/excel-column-manager.png" />
+                  <div class="caption">Excel Add-ins</div>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <!-- Content ends here -->

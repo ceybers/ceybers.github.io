@@ -3,13 +3,15 @@
 
 <head>
   <title>craige.dev</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="../assets/stylesheet202401151605.css" />
-  <link rel="stylesheet" href="../assets/stylesheet-homelab.css" />
+  <link rel="stylesheet" href="z../assets/stylesheet202401151605.css" />
+  <link rel="stylesheet" href="../assets/stylesheet20240116.css" />
+  <link rel="stylesheet" href="z../assets/stylesheet-homelab.css" />
 </head>
 
 <body>
@@ -17,26 +19,27 @@
     <div id="header">
       <div id="navbar">
         <div id="logo">craige.dev</div>
-        <div id="separator">|</div>
-        <ul class="nav">
-          <li><a href="/">Home</a></li>
-          <li><a href="/keyboards">Keyboards</a></li>
-          <li><a class="current" href="#">Homelab</a></li>
-          <li><a href="/excelvba">Excel Add-ins</a></li>
-          <li><a href="/cv">Work</a></li>
-          <li><a href="/about">About</a></li>
-        </ul>
+        <div class="spacer">&nbsp;</div>
+        <div id="navbarbuttons">
+          <ul class="nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/keyboards">Keyboards</a></li>
+            <li><a class="current" href="#">Homelab</a></li>
+            <li><a href="/excelvba">Excel Add-ins</a></li>
+            <li><a href="/cv">Work</a></li>
+            <li><a href="/about">About</a></li>
+          </ul>
+        </div>
         <div class="spacer">&nbsp;</div>
         <div id="corner">
           <a href="https://github.com/ceybers">My GitHub</a>
         </div>
       </div>
-      <div id="title">Homelab Guides</div>
     </div>
     <div id="content">
       <!-- Content starts here -->
-      <div id="homelab-3of3-container">
-        <div id="homelab-1to1of3">
+      <div id="sidebarlayout-container">
+        <div id="sidebarlayout-sidebar">
           <h3>Homelab Guides</h3>
           <ul>
             <li><a class="current" href="#">Getting Started</a></li>
@@ -56,7 +59,7 @@
             <li><a href="15-backups.html">Backups</a></li>
           </ul>
         </div>
-        <div id="homelab-2to3of3">
+        <div id="sidebarlayout-content">
           <!-- Article starts here -->
           <div class="hello">Proxmox VE Server - Getting Started</div>
           <div id="obsidian">
@@ -76,7 +79,8 @@
             <ul>
               <li><a href="14-igpupassthrough.html">iGPU Passthrough with Video Out to a physical monitor</a></li>
               <li><a href="06-tlssslcertificates.html">Self-signed TLS/SSL Certificates</a></li>
-              <li><a href="05-nginxproxymanager.html">Reverse Proxies</a> and <a href="04-pihole.html">Wildcard DNS Subdomains</a></li>
+              <li><a href="05-nginxproxymanager.html">Reverse Proxies</a> and <a href="04-pihole.html">Wildcard DNS
+                  Subdomains</a></li>
             </ul>
             <h2>Requirements</h2>
             <p>This guide assumes you have the following:</p>

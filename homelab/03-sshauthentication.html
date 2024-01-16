@@ -8,8 +8,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="../assets/stylesheet202401151605.css" />
-  <link rel="stylesheet" href="../assets/stylesheet-homelab.css" />
+  <link rel="stylesheet" href="../assets/stylesheet20240116.css" />
 </head>
 
 <body>
@@ -35,8 +34,8 @@
     </div>
     <div id="content">
       <!-- Content starts here -->
-      <div id="homelab-3of3-container">
-        <div id="homelab-1to1of3">
+      <div id="sidebarlayout-container">
+        <div id="sidebarlayout-sidebar">
           <h3>Homelab Guides</h3>
           <ul>
             <li><a href="01-gettingstarted.html">Getting Started</a></li>
@@ -56,7 +55,7 @@
             <li><a href="15-backups.html">Backups</a></li>
           </ul>
         </div>
-        <div id="homelab-2to3of3">
+        <div id="sidebarlayout-content">
           <!-- Article starts here -->
           <div class="hello">SSH Authentication</div>
           <div id="obsidian">
@@ -108,12 +107,12 @@
               server.
             </p>
             <blockquote>
-              <h4>Example Messsage</h4>
-              The authenticity of host '192.168.100.2 (192.168.100.2)' can't be established.<br />
-              ED25519 key fingerprint is SHA256:B0aMj1fpf5pPnphE/nvAt+ri0vRL6BXie0+YEx2yWaA.<br />
-              This key is not known by any other names<br />
-              Are you sure you want to continue connecting (yes/no/[fingerprint])? yes<br />
-              Warning: Permanently added '192.168.100.2' (ED25519) to the list of known hosts.</p>
+              <h4>Example Warning Messsage</h4>
+              <pre><code>The authenticity of host '192.168.100.2 (192.168.100.2)' can't be established.
+ED25519 key fingerprint is SHA256:B0aMj1fpf5pPnphE/nvAt+ri0vRL6BXie0+YEx2yWaA.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.100.2' (ED25519) to the list of known hosts.</code></pre>
             </blockquote>
             <h1>SSH <code>config</code> file</h1>
             <p>Now that it's working, we will create a file named <code>config</code> (no extension) in the
@@ -157,7 +156,8 @@ scp user@remote:C:\Users\User\Desktop\a_remote_file ~\now_its_a_local_file</code
               then signs the public keys of the respective machines. Instead of having to approve and keep individual
               keys for each host or client, you delegate the trust to your Certificate Authority.</p>
             <p>If this sounds confusing, you might want to wait until after you've set up and are comfortable with
-              <a href="06-tlssslcertificates.html">TLS/SSL Certificates</a> later in this guide.</p>
+              <a href="06-tlssslcertificates.html">TLS/SSL Certificates</a> later in this guide.
+            </p>
             <p>If it doesn't, then here are some links for further reading:</p>
             <ul>
               <li><a href="https://bash-prompt.net/guides/ssh-certificates">A Simple Guide To Getting Started With SSH
