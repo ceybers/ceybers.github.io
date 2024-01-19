@@ -51,14 +51,14 @@ DIV.cv-1to1of3 {
 DIV.cv-2to3of3 {
     padding: 2em;
     grid-column: 2/ span 2;
-    background-color: #fefbef;
+    background-color: #fcfcfd;
     border-radius: 16px;
 }
 
 DIV.cv-1to2of3 {
     padding: 2em;
     grid-column: 1 / span 2;
-    background-color: #fefbef;
+    background-color: #fcfcfd;
     border-radius: 16px;
 }
 

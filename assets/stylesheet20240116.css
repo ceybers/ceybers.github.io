@@ -211,6 +211,7 @@ UL.nav>LI>A:Hover {
     display: grid;
     align-content: start;
     grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr;
     min-height: 100%;
 }
 
@@ -302,24 +303,23 @@ DIV.img-caption-container {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 30vh;
 }
 
 DIV.img-caption {
-    width: 75vw;
-    height: 75vw;
     box-shadow: 0 0.05em 4px #07364240;
     border-radius: 1em;
+    overflow: hidden;
+    height: 100%;
 }
 
 DIV.img-caption>A {
-    display: block;
     height: 100%;
     display: flex;
     flex-direction: column;
     text-decoration: none;
     color: var(--nord1);
     background: #ffffff;
-    border-radius: 1em;
 }
 
 DIV.img-caption>A:Hover {
@@ -328,10 +328,10 @@ DIV.img-caption>A:Hover {
 }
 
 DIV.img-caption>A>IMG {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    flex: 1 1 0;
-    height: 0;
-    border-radius: 1em 1em 0 0;
+    
 }
 
 DIV.img-caption>A>DIV.caption {
@@ -345,19 +345,18 @@ DIV.fouritems DIV.img-caption {
 }
 
 @media only screen and (min-width: 992px) {
-    
+
     #sidebarlayout-content {
         align-content: start;
         grid-template-columns: 10vw auto 10vw;
     }
-    
+
     DIV.img-caption-container {
         flex-direction: row;
     }
 
     DIV.img-caption {
-        max-width: 25vw;
-        max-height: 25vw;
+        flex-grow: 1;
     }
 
     DIV.fouritems {
