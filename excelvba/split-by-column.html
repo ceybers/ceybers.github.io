@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Split Table by Column Tool | Excel Add-ins | craige.dev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/stylesheet202401201005.css" />
+</head>
+
+<body>
+    <div class="grid-container">
+        <div id="header">
+            <div id="navbar">
+                <div id="logo">craige.dev</div>
+                <div id="spacer">&nbsp;</div>
+                <div id="navbarbuttons">
+                    <ul class="nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/keyboards">Keyboards</a></li>
+                        <li><a href="/homelab/01-gettingstarted.html">Homelab</a></li>
+                        <li><a class="current" href="#">Excel Add-ins</a></li>
+                        <li><a href="/cv">Work</a></li>
+                        <li><a href="/about">About</a></li>
+                    </ul>
+                </div>
+                <div class="spacer">&nbsp;</div>
+                <div id="corner">
+                    <a href="https://github.com/ceybers">My GitHub</a>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <!-- Content starts here -->
+            <div id="sidebarlayout-container">
+                <div id="sidebarlayout-sidebar">
+                    <h3>Excel Add-ins</h3>
+                    <ul>
+                        <li><a href="index.html">Index</a></li>
+                        <br />
+                        <li><a href="table-transfer.html">Table Transfer Tool</a></li>
+                        <li><a href="column-manager.html">Column Manager</a></li>
+                        <li><a href="persistent-sort.html">Persistent Sort</a></li>
+                        <li><a href="status-column.html">Status Column</a></li>
+                        <li><a href="inline-regex.html">Inline Regex Tool</a></li>
+                        <li><a class="current" href="#">Table Split by Column</a></li>
+                        <li><a href="related-table.html">Related Table Tool</a></li>
+                        <br />
+                        <li><a href="helper-library.html">Helper Library</a></li>
+                    </ul>
+                </div>
+
+                <div id="sidebarlayout-content">
+                    <div id="obsidian">
+                        <!-- Article starts here -->
+                        <h1 class="--center">Split Table by Column Tool</h1>
+                        <blockquote>
+                            <p>This is an Excel VBA tool that will split a Table into separate worksheets, based on the
+                                contents of one of the table's columns.</p>
+                            <p>It is available on Github at <a
+                                    href="https://github.com/ceybers/excel-table-split-column">https://github.com/ceybers/excel-table-split-column</a>.
+                            </p>
+                        </blockquote>
+                        
+                        <h3>What does it do?</h3>
+                        <p>You select a column in your table, then the tool will create a new worksheet for each unique
+                            value in that column, with a copy of the table in each worksheet that only contains rows
+                            with that value.</p>
+
+                        <div class="--center"><img src="../images/excel/split-by-column.png" /></div>
+
+                        <h3>Why did you make this tool?</h3>
+                        <p>This is a common enough request in the office world that it was worth the time to create a
+                            tool to automate the process.</p>
+                        <p>The tool does some basic checks such as whether or not the sheet names will be valid (no
+                            weird characters), and that it won't try to create a ridiculous amount of new worksheets.
+                        </p>
+
+                        <!-- Article ends here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content ends here -->
+    </div>
+    <div id="footer">
+        <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
+    </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Excel Helper Library | Excel Add-ins | craige.dev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/stylesheet202401201005.css" />
+</head>
+
+<body>
+    <div class="grid-container">
+        <div id="header">
+            <div id="navbar">
+                <div id="logo">craige.dev</div>
+                <div id="spacer">&nbsp;</div>
+                <div id="navbarbuttons">
+                    <ul class="nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/keyboards">Keyboards</a></li>
+                        <li><a href="/homelab/01-gettingstarted.html">Homelab</a></li>
+                        <li><a class="current" href="#">Excel Add-ins</a></li>
+                        <li><a href="/cv">Work</a></li>
+                        <li><a href="/about">About</a></li>
+                    </ul>
+                </div>
+                <div class="spacer">&nbsp;</div>
+                <div id="corner">
+                    <a href="https://github.com/ceybers">My GitHub</a>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <!-- Content starts here -->
+            <div id="sidebarlayout-container">
+                <div id="sidebarlayout-sidebar">
+                    <h3>Excel Add-ins</h3>
+                    <ul>
+                        <li><a href="index.html">Index</a></li>
+                        <br />
+                        <li><a href="table-transfer.html">Table Transfer Tool</a></li>
+                        <li><a href="column-manager.html">Column Manager</a></li>
+                        <li><a href="persistent-sort.html">Persistent Sort</a></li>
+                        <li><a href="status-column.html">Status Column</a></li>
+                        <li><a href="inline-regex.html">Inline Regex Tool</a></li>
+                        <li><a href="split-by-column.html">Table Split by Column</a></li>
+                        <li><a href="related-table.html">Related Table Tool</a></li>
+                        <br />
+                        <li><a class="current" href="#">Helper Library</a></li>
+                    </ul>
+                </div>
+
+                <div id="sidebarlayout-content">
+                    <div id="obsidian">
+                        <!-- Article starts here -->
+                        <h1 class="--center">Excel Helper Library</h1>
+                        <blockquote>
+                            <p>This is my humble collection of Excel Helpers. There are many like it, but this one is
+                                mine.</p>
+                            <p>It is available on Github at <a
+                                    href="https://github.com/ceybers/excel-helper-library">https://github.com/ceybers/excel-helper-library</a>.
+                            </p>
+                        </blockquote>
+                        <h3>Why?</h3>
+                        <p>In creating VBA projects a large portion of that time and effort is spent on problems that
+                            have been solved a long time ago and optimised as much as reasonably possible.</p>
+                        <p>There is no need to repeat yourself and recreate the functionality to be able to check if an
+                            item exists in a <code>Collection</code> or implement a <code>Queue</code> or a
+                            <code>Stack</code>.</p>
+                        <p>Then there are more interesting patterns, such as having a standard way of storing data in a
+                            user specific location, or inside a worksheet where the user cannot accidentally remove it.
+                        </p>
+                        <p>None of these are particularly innovative or ground breaking, but rather just my personal
+                            collection of reusable code.</p>
+
+                        <h3>Things to do</h3>
+                        <p>After many hours of practice and trial and error, I've more or less landed on a generic
+                            implementation of the Model-Model View-View pattern that works for me. Heavily based upon
+                            the work of <a
+                                href="https://rubberduckvba.blog/2023/04/11/lightweight-mvvm-in-vba/">Rubberduck
+                                VBA</a>, but simplified and condensed down to my use cases. Now I just need to get
+                            around to cleaning it up and committing it to code and writing up all the documentation.</p>
+                        <p>I also want to create a sort of personal Design System for Excel VBA UI. If you're familiar,
+                            the options available are incredibly outdated, with the most recent being the
+                            <code>TreeView</code> and <code>ListView</code> from <a
+                                href="https://devblogs.microsoft.com/oldnewthing/20080129-00/?p=23663">Common Controls
+                                6.0, circa 2007</a>. In a different world I'd be creating desktop apps using WPF and
+                            modern UI controls and coding in C#, but for now the sheer amount of Excel busywork that is
+                            necessary to keep the average office from spontaneously combusting makes creating tools in
+                            Excel VBA worth the time and effort.</p>
+                        <p>It's just that it feels <i>wrong</i> having to create a UI that looks like it stumbled out of
+                            a <a href="https://gekk.info/articles/explorer.html">time machine from 1995</a>.</p>
+
+                        <div class="--center"><img src="../images/excel/windows-95-file-explorer.png" /></div>
+                        <!-- Article ends here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content ends here -->
+    </div>
+    <div id="footer">
+        <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
+    </div>
+    </div>
+</body>
+
+</html>
