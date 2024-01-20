@@ -1,113 +1,103 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Status Column Tool | Excel Add-ins | craige.dev</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Column Tool | Excel Add-ins | craige.dev</title>
+    <link rel="stylesheet" href="../assets/stylesheet202401201541.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="../assets/stylesheet202401201005.css" />
 </head>
 
-<body>
-    <div class="grid-container">
-        <div id="header">
-            <div id="navbar">
-                <div id="logo">craige.dev</div>
-                <div id="spacer">&nbsp;</div>
-                <div id="navbarbuttons">
-                    <ul class="nav">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/keyboards">Keyboards</a></li>
-                        <li><a href="/homelab/01-gettingstarted.html">Homelab</a></li>
-                        <li><a class="current" href="#">Excel Add-ins</a></li>
-                        <li><a href="/cv">Work</a></li>
-                        <li><a href="/about">About</a></li>
-                    </ul>
-                </div>
-                <div class="spacer">&nbsp;</div>
-                <div id="corner">
-                    <a href="https://github.com/ceybers">My GitHub</a>
-                </div>
-            </div>
+<body class="body-grid-container">
+    <header class="header-grid box-shadow-header">
+        <div id="logo">craige.dev</div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/keyboards">Keyboards</a></li>
+                <li><a href="/homelab/01-gettingstarted.html">Homelab</a></li>
+                <li><a class="current" href="#">Excel Add-ins</a></li>
+                <li><a href="/cv">Work</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+        <div id="corner">
+            <a href="https://github.com/ceybers">My GitHub</a>
         </div>
-        <div id="content">
-            <!-- Content starts here -->
-            <div id="sidebarlayout-container">
-                <div id="sidebarlayout-sidebar">
-                    <h3>Excel Add-ins</h3>
-                    <ul>
-                        <li><a href="index.html">Index</a></li>
-                        <br />
-                        <li><a href="table-transfer.html">Table Transfer Tool</a></li>
-                        <li><a href="column-manager.html">Column Manager</a></li>
-                        <li><a href="persistent-sort.html">Persistent Sort</a></li>
-                        <li><a class="current" href="#">Status Column</a></li>
-                        <li><a href="inline-regex.html">Inline Regex Tool</a></li>
-                        <li><a href="split-by-column.html">Table Split by Column</a></li>
-                        <li><a href="related-table.html">Related Table Tool</a></li>
-                        <br />
-                        <li><a href="helper-library.html">Helper Library</a></li>
-                    </ul>
-                </div>
+    </header>
 
-                <div id="sidebarlayout-content">
-                    <div id="obsidian">
-                        <!-- Article starts here -->
-                        <h1 class="--center">Status Column Tool</h1>
+    <main class="sidebarlayout-container">
+        <nav class="sidebarlayout-sidebar sidebar-shadow">
+            <h3>Excel Add-ins</h3>
+            <ul>
+                <li><a href="index.html">Index</a></li>
+                <li class="empty-li">&nbsp;</li>
+                <li><a href="table-transfer.html">Table Transfer Tool</a></li>
+                <li><a href="column-manager.html">Column Manager</a></li>
+                <li><a href="persistent-sort.html">Persistent Sort</a></li>
+                <li><a class="current" href="#">Status Column</a></li>
+                <li><a href="inline-regex.html">Inline Regex Tool</a></li>
+                <li><a href="split-by-column.html">Table Split by Column</a></li>
+                <li><a href="related-table.html">Related Table Tool</a></li>
+                <li class="empty-li">&nbsp;</li>
+                <li><a href="helper-library.html">Helper Library</a></li>
+            </ul>
+        </nav>
 
-                        <blockquote>
-                            <p>Formats a Column in a Table using a preset of Data Validation and matching Conditional
-                                Formatting.</p>
-                            <p>It is available on Github at <a
-                                    href="https://github.com/ceybers/excel-status-column">https://github.com/ceybers/excel-status-column</a>.
-                            </p>
-                        </blockquote>
-                        
-                        <h3>What does it do?</h3>
-                        <p>Adds a set of Data Validation and Conditional Formatting to Column, based on a user-defined
-                            preset.</p>
+        <section class="sidebarlayout-content">
+            <article>
+                <h1 class="--center">Status Column Tool</h1>
 
-                        <div class="--center"><img src="../images/excel/status-column.png" /></div>
+                <blockquote>
+                    <p>Formats a Column in a Table using a preset of Data Validation and matching Conditional
+                        Formatting.</p>
+                    <p>It is available on Github at <a
+                            href="https://github.com/ceybers/excel-status-column">https://github.com/ceybers/excel-status-column</a>.
+                    </p>
+                </blockquote>
 
-                        <h3>Why did you make this tool?</h3>
-                        <p>The pattern of having a column constrained to values such as "Yes, No, N/A" or "High, Medium,
-                            Low" is ubiquitous in office life.</p>
-                        <p>Having a tool that can apply both Data Validation and Conditional Formatting from a
-                            predefined standard not only saves time by reducing the action to three clicks (Open Tool,
-                            Select Preset, Apply), it ensures that all the columns are formatted <i>exactly</i> the
-                            same, which means that once everyone has updated the spreadsheet, all the data should be the
-                            same, saving you time and effort in validating, cleansing and normalising your data. </p>
+                <h3>What does it do?</h3>
+                <p>Adds a set of Data Validation and Conditional Formatting to Column, based on a user-defined
+                    preset.</p>
 
-                        <h3>Shortcomings</h3>
-                        <p>I haven't had a chance to work on this tool in a long time. I never finished the ability to
-                            allow the presets to be edited in the tool - you have to resort to editing the plain text
-                            file manually. I also never managed to find a good way of previewing all the colors at once.
-                            It seems the only usable way would be to open a new Excel window with a temporary workbook
-                            and show the previews in there.</p>
-                        <p>Ideally I'd rewrite the entire tool from scratch so that it uses the same better principles
-                            I've since picked up for things like serialising the data, the user interface, and the MVVM
-                            pattern behind the scenes that ties everything together.</p>
+                <div class="--center"><img src="../images/excel/status-column.png" alt="Screenshot of Status Column Tool" width="698" height="402"></div>
 
-                        <div class="--center"><img src="../images/excel/status-column-preset.png" /></div>
+                <h3>Why did you make this tool?</h3>
+                <p>The pattern of having a column constrained to values such as "Yes, No, N/A" or "High, Medium,
+                    Low" is ubiquitous in office life.</p>
+                <p>Having a tool that can apply both Data Validation and Conditional Formatting from a
+                    predefined standard not only saves time by reducing the action to three clicks (Open Tool,
+                    Select Preset, Apply), it ensures that all the columns are formatted <i>exactly</i> the
+                    same, which means that once everyone has updated the spreadsheet, all the data should be the
+                    same, saving you time and effort in validating, cleansing and normalising your data. </p>
 
-                        <h3>Fun Trivia</h3>
-                        <p>The original plan was to store the presets in CSS and the tool would translate the CSS into
-                            something that can be used to format Excel cells.</p>
-                        <!-- Article ends here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Content ends here -->
-    </div>
-    <div id="footer">
-        <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
-    </div>
-    </div>
+                <h3>Shortcomings</h3>
+                <p>I haven't had a chance to work on this tool in a long time. I never finished the ability to
+                    allow the presets to be edited in the tool - you have to resort to editing the plain text
+                    file manually. I also never managed to find a good way of previewing all the colors at once.
+                    It seems the only usable way would be to open a new Excel window with a temporary workbook
+                    and show the previews in there.</p>
+                <p>Ideally I'd rewrite the entire tool from scratch so that it uses the same better principles
+                    I've since picked up for things like serialising the data, the user interface, and the MVVM
+                    pattern behind the scenes that ties everything together.</p>
+
+                <div class="--center"><img src="../images/excel/status-column-preset.png" alt="Screenshot of user settings file for Status Column Tool" width="489" height="430" ></div>
+
+                <h3>Fun Trivia</h3>
+                <p>The original plan was to store the presets in CSS and the tool would translate the CSS into
+                    something that can be used to format Excel cells.</p>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footnote">&copy; Copyright 2024 Craig Eybers. All rights reserved.</div>
+    </footer>
 </body>
 
 </html>

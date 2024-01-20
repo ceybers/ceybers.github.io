@@ -1,93 +1,83 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Persistent Sort Order Tool | Excel Add-ins | craige.dev</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persistent Sort Order Tool | Excel Add-ins | craige.dev</title>
+    <link rel="stylesheet" href="../assets/stylesheet202401201541.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="../assets/stylesheet202401201005.css" />
 </head>
 
-<body>
-    <div class="grid-container">
-        <div id="header">
-            <div id="navbar">
-                <div id="logo">craige.dev</div>
-                <div id="spacer">&nbsp;</div>
-                <div id="navbarbuttons">
-                    <ul class="nav">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/keyboards">Keyboards</a></li>
-                        <li><a href="/homelab/01-gettingstarted.html">Homelab</a></li>
-                        <li><a class="current" href="#">Excel Add-ins</a></li>
-                        <li><a href="/cv">Work</a></li>
-                        <li><a href="/about">About</a></li>
-                    </ul>
-                </div>
-                <div class="spacer">&nbsp;</div>
-                <div id="corner">
-                    <a href="https://github.com/ceybers">My GitHub</a>
-                </div>
-            </div>
+<body class="body-grid-container">
+    <header class="header-grid box-shadow-header">
+        <div id="logo">craige.dev</div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/keyboards">Keyboards</a></li>
+                <li><a href="/homelab/01-gettingstarted.html">Homelab</a></li>
+                <li><a class="current" href="#">Excel Add-ins</a></li>
+                <li><a href="/cv">Work</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+        <div id="corner">
+            <a href="https://github.com/ceybers">My GitHub</a>
         </div>
-        <div id="content">
-            <!-- Content starts here -->
-            <div id="sidebarlayout-container">
-                <div id="sidebarlayout-sidebar">
-                    <h3>Excel Add-ins</h3>
-                    <ul>
-                        <li><a href="index.html">Index</a></li>
-                        <br />
-                        <li><a href="table-transfer.html">Table Transfer Tool</a></li>
-                        <li><a href="column-manager.html">Column Manager</a></li>
-                        <li><a class="current" href="#">Persistent Sort</a></li>
-                        <li><a href="status-column.html">Status Column</a></li>
-                        <li><a href="inline-regex.html">Inline Regex Tool</a></li>
-                        <li><a href="split-by-column.html">Table Split by Column</a></li>
-                        <li><a href="related-table.html">Related Table Tool</a></li>
-                        <br />
-                        <li><a href="helper-library.html">Helper Library</a></li>
-                    </ul>
-                </div>
+    </header>
 
-                <div id="sidebarlayout-content">
-                    <div id="obsidian">
-                        <!-- Article starts here -->
-                        <h1 class="--center">Persistent Sort Order Tool</h1>
-                        
-                        <blockquote>
-                            <p>Save and restore the Sort Order of a Table in Excel.</p>
-                            <p>It is available on Github at <a
-                                    href="https://github.com/ceybers/excel-persistent-sort">https://github.com/ceybers/excel-persistent-sort</a>.
-                            </p>
-                        </blockquote>
-                        
-                        <h3>What does it do?</h3>
-                        <p>Save the Custom Sort order of a Table in Excel so that you can restore it in future.</p>
-                        
-                        <h3>Why did you make this tool?</h3>
-                        <p>Sometimes Excel will reset the Sort Order of the columns in the Table you are working with,
-                            which is particularly annoying when you are sorting by several columns. This tool lets you
-                            save and restore the sort order, and those saved states persist across closing the file.</p>
-                        <p>If you have multiple tables or multiple files with the same columns you want to sort by, you
-                            can apply the sort order to them, even if they don't have all the columns that the original
-                            table had.</p>
-                        <div class="--center"><img src="../images/excel/persistent-sort-order.png" /></div>
-                        <!-- Article ends here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Content ends here -->
-    </div>
-    <div id="footer">
-        <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
-    </div>
-    </div>
+    <main class="sidebarlayout-container">
+        <nav class="sidebarlayout-sidebar sidebar-shadow">
+            <h3>Excel Add-ins</h3>
+            <ul>
+                <li><a href="index.html">Index</a></li>
+                <li class="empty-li">&nbsp;</li>
+                <li><a href="table-transfer.html">Table Transfer Tool</a></li>
+                <li><a href="column-manager.html">Column Manager</a></li>
+                <li><a class="current" href="#">Persistent Sort</a></li>
+                <li><a href="status-column.html">Status Column</a></li>
+                <li><a href="inline-regex.html">Inline Regex Tool</a></li>
+                <li><a href="split-by-column.html">Table Split by Column</a></li>
+                <li><a href="related-table.html">Related Table Tool</a></li>
+                <li class="empty-li">&nbsp;</li>
+                <li><a href="helper-library.html">Helper Library</a></li>
+            </ul>
+        </nav>
+
+        <section class="sidebarlayout-content">
+            <article>
+                <h1 class="--center">Persistent Sort Order Tool</h1>
+
+                <blockquote>
+                    <p>Save and restore the Sort Order of a Table in Excel.</p>
+                    <p>It is available on Github at <a
+                            href="https://github.com/ceybers/excel-persistent-sort">https://github.com/ceybers/excel-persistent-sort</a>.
+                    </p>
+                </blockquote>
+
+                <h3>What does it do?</h3>
+                <p>Save the Custom Sort order of a Table in Excel so that you can restore it in future.</p>
+
+                <h3>Why did you make this tool?</h3>
+                <p>Sometimes Excel will reset the Sort Order of the columns in the Table you are working with,
+                    which is particularly annoying when you are sorting by several columns. This tool lets you
+                    save and restore the sort order, and those saved states persist across closing the file.</p>
+                <p>If you have multiple tables or multiple files with the same columns you want to sort by, you
+                    can apply the sort order to them, even if they don't have all the columns that the original
+                    table had.</p>
+                <div class="--center"><img src="../images/excel/persistent-sort-order.png" alt="Screenshot of Persistent Sort Order Tool" width="649" height="577"></div>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footnote">&copy; Copyright 2024 Craig Eybers. All rights reserved.</div>
+    </footer>
 </body>
 
 </html>

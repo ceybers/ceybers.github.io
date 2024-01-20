@@ -1,144 +1,141 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Table Transfer Tool | Excel Add-ins | craige.dev</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Transfer Tool | Excel Add-ins | craige.dev</title>
+    <link rel="stylesheet" href="../assets/stylesheet202401201541.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="../assets/stylesheet202401201005.css" />
 </head>
 
-<body>
-    <div class="grid-container">
-        <div id="header">
-            <div id="navbar">
-                <div id="logo">craige.dev</div>
-                <div id="spacer">&nbsp;</div>
-                <div id="navbarbuttons">
-                    <ul class="nav">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/keyboards">Keyboards</a></li>
-                        <li><a href="/homelab/01-gettingstarted.html">Homelab</a></li>
-                        <li><a class="current" href="#">Excel Add-ins</a></li>
-                        <li><a href="/cv">Work</a></li>
-                        <li><a href="/about">About</a></li>
-                    </ul>
-                </div>
-                <div class="spacer">&nbsp;</div>
-                <div id="corner">
-                    <a href="https://github.com/ceybers">My GitHub</a>
-                </div>
-            </div>
+<body class="body-grid-container">
+    <header class="header-grid box-shadow-header">
+        <div id="logo">craige.dev</div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/keyboards">Keyboards</a></li>
+                <li><a href="/homelab/01-gettingstarted.html">Homelab</a></li>
+                <li><a class="current" href="#">Excel Add-ins</a></li>
+                <li><a href="/cv">Work</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+        <div id="corner">
+            <a href="https://github.com/ceybers">My GitHub</a>
         </div>
-        <div id="content">
-            <!-- Content starts here -->
-            <div id="sidebarlayout-container">
-                <div id="sidebarlayout-sidebar">
-                    <h3>Excel Add-ins</h3>
-                    <ul>
-                        <li><a href="index.html">Index</a></li>
-                        <br />
-                        <li><a class="current" href="#">Table Transfer Tool</a></li>
-                        <li><a href="column-manager.html">Column Manager</a></li>
-                        <li><a href="persistent-sort.html">Persistent Sort</a></li>
-                        <li><a href="status-column.html">Status Column</a></li>
-                        <li><a href="inline-regex.html">Inline Regex Tool</a></li>
-                        <li><a href="split-by-column.html">Table Split by Column</a></li>
-                        <li><a href="related-table.html">Related Table Tool</a></li>
-                        <br />
-                        <li><a href="helper-library.html">Helper Library</a></li>
-                    </ul>
-                </div>
+    </header>
+    <main class="sidebarlayout-container">
+        <!-- Content starts here -->
 
-                <div id="sidebarlayout-content">
-                    <div id="obsidian">
-                        <!-- Article starts here -->
-                        <h1 class="--center">Table Transfer Tool</h1>
-                        <blockquote>
-                            <p>An Excel Add-in for transferring data from one table to another, matching multiple
-                                columns at once, with the option to only transfer data into blank cells in the
-                                destination table (and not overwrite existing data).</p>
-                            <p>It is available on Github at <a
-                                    href="https://github.com/ceybers/excel-table-transfer">https://github.com/ceybers/excel-table-transfer</a>.
-                            </p>
-                        </blockquote>
-                        <h3>What does it do?</h3>
-                        <p>You select which columns in each table uniquely identify the rows, then you select all the
-                            columns you want transfered between the two tables. The tool then transfers all the data
-                            across into the destination table while not overwriting any other data.</p>
-                        <h3>Why did you make this tool?</h3>
-                        <p>At work we spend a lot of time transferring data between spreadsheets. Once the number of
-                            rows reachs the 5 digit range, and you're working with over a hundred columns, conventional
-                            tools like <code>VLOOKUP</code> are no longer practical. Even with smaller tables, you might
-                            only want to pull data into empty cells in the destination table, and you certainly don't
-                            want to overwrite existing data with an error if it wasn't found in the source table. And
-                            having to repeat the process because you need to transfer several columns does not scale at
-                            all.</p>
+        <nav class="sidebarlayout-sidebar sidebar-shadow">
+            <h3>Excel Add-ins</h3>
+            <ul>
+                <li><a href="index.html">Index</a></li>
+                <li class="empty-li">&nbsp;</li>
+                <li><a class="current" href="#">Table Transfer Tool</a></li>
+                <li><a href="column-manager.html">Column Manager</a></li>
+                <li><a href="persistent-sort.html">Persistent Sort</a></li>
+                <li><a href="status-column.html">Status Column</a></li>
+                <li><a href="inline-regex.html">Inline Regex Tool</a></li>
+                <li><a href="split-by-column.html">Table Split by Column</a></li>
+                <li><a href="related-table.html">Related Table Tool</a></li>
+                <li class="empty-li">&nbsp;</li>
+                <li><a href="helper-library.html">Helper Library</a></li>
+            </ul>
+        </nav>
 
-                        <div class="--center"><img src="../images/excel/table-transfer-src-and-dst-old.png" /></div>
-                        <h3>How does it work?</h3>
-                        <p>It starts off by selecting the source table and the destination table. </p>
-                        <p>Once you've selected a pair of tables, it will try to guess which columns contain your unique
-                            keys before allowing you to manually choose. It will then check the quality of both columns
-                            so that you can easily confirm that all the values are unique and that there are no
-                            duplicates or blanks.</p>
-                        <div class="--center"><img src="../images/excel/table-transfer-key-mapper-old.png" /></div>
+        <section class="sidebarlayout-content">
+            <article>
+                <h1 class="--center">Table Transfer Tool</h1>
+                <blockquote>
+                    <p>An Excel Add-in for transferring data from one table to another, matching multiple
+                        columns at once, with the option to only transfer data into blank cells in the
+                        destination table (and not overwrite existing data).</p>
+                    <p>It is available on Github at <a
+                            href="https://github.com/ceybers/excel-table-transfer">https://github.com/ceybers/excel-table-transfer</a>.
+                    </p>
+                </blockquote>
+                <h3>What does it do?</h3>
+                <p>You select which columns in each table uniquely identify the rows, then you select all the
+                    columns you want transfered between the two tables. The tool then transfers all the data
+                    across into the destination table while not overwriting any other data.</p>
+                <h3>Why did you make this tool?</h3>
+                <p>At work we spend a lot of time transferring data between spreadsheets. Once the number of
+                    rows reachs the 5 digit range, and you're working with over a hundred columns, conventional
+                    tools like <code>VLOOKUP</code> are no longer practical. Even with smaller tables, you might
+                    only want to pull data into empty cells in the destination table, and you certainly don't
+                    want to overwrite existing data with an error if it wasn't found in the source table. And
+                    having to repeat the process because you need to transfer several columns does not scale at
+                    all.</p>
+
+                <div class="--center"><img src="../images/excel/table-transfer-src-and-dst-old.png"
+                        alt="Screenshot showing Source and Destination picker" width="328" height="334"></div>
+                <h3>How does it work?</h3>
+                <p>It starts off by selecting the source table and the destination table. </p>
+                <p>Once you've selected a pair of tables, it will try to guess which columns contain your unique
+                    keys before allowing you to manually choose. It will then check the quality of both columns
+                    so that you can easily confirm that all the values are unique and that there are no
+                    duplicates or blanks.</p>
+                <div class="--center"><img src="../images/excel/table-transfer-key-mapper-old.png"
+                        alt="Screenshot showing Key Mapping dialog box" width="418" height="615"></div>
 
 
-                        <p>Next it will compare the two columns to see which keys are present in both tables, and which
-                            keys are only present in one of the tables. Keys that are only present in the source table
-                            but not the destination are considered additions, and keys present in the destination but
-                            not found in the source are considered orphans.</p>
+                <p>Next it will compare the two columns to see which keys are present in both tables, and which
+                    keys are only present in one of the tables. Keys that are only present in the source table
+                    but not the destination are considered additions, and keys present in the destination but
+                    not found in the source are considered orphans.</p>
 
-                        <div class="--center"><img src="../images/excel/table-transfer-column-mapper.png" /></div>
+                <div class="--center"><img src="../images/excel/table-transfer-column-mapper.png"
+                        alt="Screenshot showing Value Mapping dialog box" width="833" height="603"></div>
 
-                        <p>Once we have two tables with a key column in each table joining them, we can choose which
-                            columns we want to match between the two and transfer data across. By default the tool will
-                            try and match columns with the exact same name. The user can then of course choose pairs of
-                            columns to map together.</p>
+                <p>Once we have two tables with a key column in each table joining them, we can choose which
+                    columns we want to match between the two and transfer data across. By default the tool will
+                    try and match columns with the exact same name. The user can then of course choose pairs of
+                    columns to map together.</p>
 
-                        <div class="--center"><img src="../images/excel/table-transfer-results.png" /></div>
+                <div class="--center"><img src="../images/excel/table-transfer-results.png"
+                        alt="Screenshot showing result of transferring a table" width="598" height="295"></div>
 
-                        <p>Once the user has confirmed what they want, the tool then transfers the new data across and
-                            highlights the changes.</p>
+                <p>Once the user has confirmed what they want, the tool then transfers the new data across and
+                    highlights the changes.</p>
 
-                        <h3>Going Forward</h3>
-                        <p>Some features I'd like to add would be different highlighting based on what kind of transfer
-                            it was (new value into an empty cell, new value replacing an old value, completely new row,
-                            etc.), as well as a summary dialog box showing how long it took and which rows and columns
-                            were affected.</p>
+                <h3>Going Forward</h3>
+                <p>Some features I'd like to add would be different highlighting based on what kind of transfer
+                    it was (new value into an empty cell, new value replacing an old value, completely new row,
+                    etc.), as well as a summary dialog box showing how long it took and which rows and columns
+                    were affected.</p>
 
-                        <p>I also want to add a History feature that would keep a record of all the transfers a table
-                            was used in, so you can repeat the operation with a single click. This would also need to
-                            handle things such as filenames changing or worksheet names changing while the contents are
-                            still the same.</p>
-                        <p>Lastly, if we keep a Change Data Capture record for all the cells we change, we'd be able to
-                            implement an Undo function.</p>
+                <p>I also want to add a History feature that would keep a record of all the transfers a table
+                    was used in, so you can repeat the operation with a single click. This would also need to
+                    handle things such as filenames changing or worksheet names changing while the contents are
+                    still the same.</p>
+                <p>Lastly, if we keep a Change Data Capture record for all the cells we change, we'd be able to
+                    implement an Undo function.</p>
 
-                        <h3>Closing Thoughts</h3>
-                        <p>The <a href="https://github.com/ceybers/excel-table-transfer/blob/dev2/Notes/TODO.md">TODO
-                                list</a> for this project has grown and scope-creeped to such an extent that it
-                            overwhelming to the point I'd need to start over.</p>
+                <h3>Closing Thoughts</h3>
+                <p>The <a href="https://github.com/ceybers/excel-table-transfer/blob/dev2/Notes/TODO.md">TODO
+                        list</a> for this project has grown and scope-creeped to such an extent that it
+                    overwhelming to the point I'd need to start over.</p>
 
-                        <p>I wrote the original 2021 after procrastinating on the idea since about 2019. I tried to
-                            rewrite it in 2022 while on leave from work but I ran out of time. Since then I've spent an
-                            inordinate amount of time learning how to squeeze the maximum utility out of VBA, and if I
-                            were to continue on the project, I'd definitely need to rewrite everything from scratch.</p>
+                <p>I wrote the original 2021 after procrastinating on the idea since about 2019. I tried to
+                    rewrite it in 2022 while on leave from work but I ran out of time. Since then I've spent an
+                    inordinate amount of time learning how to squeeze the maximum utility out of VBA, and if I
+                    were to continue on the project, I'd definitely need to rewrite everything from scratch.</p>
 
-                        <!-- Article ends here -->
-                    </div>
-                </div>
-            </div>
-        </div>
+            </article>
+        </section>
         <!-- Content ends here -->
-        <div id="footer">
-            <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
-        </div>
-    </div>
+    </main>
+
+    <footer>
+        <div class="footnote">&copy; Copyright 2024 Craig Eybers. All rights reserved.</div>
+    </footer>
 </body>
 
 </html>

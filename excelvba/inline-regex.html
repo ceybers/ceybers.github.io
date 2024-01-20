@@ -1,107 +1,99 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Inline Regex Tool | Excel Add-ins | craige.dev</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inline Regex Tool | Excel Add-ins | craige.dev</title>
+    <link rel="stylesheet" href="../assets/stylesheet202401201541.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="../assets/stylesheet202401201005.css" />
 </head>
 
-<body>
-    <div class="grid-container">
-        <div id="header">
-            <div id="navbar">
-                <div id="logo">craige.dev</div>
-                <div id="spacer">&nbsp;</div>
-                <div id="navbarbuttons">
-                    <ul class="nav">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/keyboards">Keyboards</a></li>
-                        <li><a href="/homelab/01-gettingstarted.html">Homelab</a></li>
-                        <li><a class="current" href="#">Excel Add-ins</a></li>
-                        <li><a href="/cv">Work</a></li>
-                        <li><a href="/about">About</a></li>
-                    </ul>
-                </div>
-                <div class="spacer">&nbsp;</div>
-                <div id="corner">
-                    <a href="https://github.com/ceybers">My GitHub</a>
-                </div>
-            </div>
+
+<body class="body-grid-container">
+    <header class="header-grid box-shadow-header">
+        <div id="logo">craige.dev</div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/keyboards">Keyboards</a></li>
+                <li><a href="/homelab/01-gettingstarted.html">Homelab</a></li>
+                <li><a class="current" href="#">Excel Add-ins</a></li>
+                <li><a href="/cv">Work</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+        <div id="corner">
+            <a href="https://github.com/ceybers">My GitHub</a>
         </div>
-        <div id="content">
-            <!-- Content starts here -->
-            <div id="sidebarlayout-container">
-                <div id="sidebarlayout-sidebar">
-                    <h3>Excel Add-ins</h3>
-                    <ul>
-                        <li><a href="index.html">Index</a></li>
-                        <br />
-                        <li><a href="table-transfer.html">Table Transfer Tool</a></li>
-                        <li><a href="column-manager.html">Column Manager</a></li>
-                        <li><a href="persistent-sort.html">Persistent Sort</a></li>
-                        <li><a href="status-column.html">Status Column</a></li>
-                        <li><a class="current" href="#">Inline Regex Tool</a></li>
-                        <li><a href="split-by-column.html">Table Split by Column</a></li>
-                        <li><a href="related-table.html">Related Table Tool</a></li>
-                        <br />
-                        <li><a href="helper-library.html">Helper Library</a></li>
-                    </ul>
-                </div>
+    </header>
 
-                <div id="sidebarlayout-content">
-                    <div id="obsidian">
-                        <!-- Article starts here -->
-                        <h1 class="--center">Inline Regex Tool</h1>
-                        <blockquote>
-                            <p>A GUI for previewing your Regex pattern before applying it to data in Excel.</p>
-                            <p>It is available on Github at <a
-                                    href="https://github.com/ceybers/excel-regex-tool">https://github.com/ceybers/excel-regex-tool</a>.
-                            </p>
-                        </blockquote>
-                        
-                        <h3>What does it do?</h3>
-                        <p>Loads a preview of the values in a column, then shows you a preview of what your RegEx
-                            Replace would result in for each cell.</p>
-                        <p>Once you're satisfied, it applies the RegEx to each cell and displays a summary of how
-                            sucessful you were. You can then choose whether you want to save the results to the
-                            worksheet.</p>
+    <main class="sidebarlayout-container">
+        <nav class="sidebarlayout-sidebar sidebar-shadow">
+            <h3>Excel Add-ins</h3>
+            <ul>
 
-                        <div class="--center"><img src="../images/excel/inline-regex-tool.png" /></div>
 
-                        <h3>Why did you make this tool?</h3>
-                        <p>Vanilla Excel doesn't have any RegEx tools. If you search you'll easily find a User-Defined
-                            Function that works really well, but there is no way to preview whether your expression will
-                            work when you're working with thousands of cells.</p>
-                        <p>This tool lets you preview whether or not your expression actually works, and then evaluates
-                            it across all the data in your table in memory, giving you the chance to decide whether or
-                            not to commit those changes to your worksheet.</p>
+                <li><a href="index.html">Index</a></li>
+                <li class="empty-li">&nbsp;</li>
+                <li><a href="table-transfer.html">Table Transfer Tool</a></li>
+                <li><a href="column-manager.html">Column Manager</a></li>
+                <li><a href="persistent-sort.html">Persistent Sort</a></li>
+                <li><a href="status-column.html">Status Column</a></li>
+                <li><a class="current" href="#">Inline Regex Tool</a></li>
+                <li><a href="split-by-column.html">Table Split by Column</a></li>
+                <li><a href="related-table.html">Related Table Tool</a></li>
+                <li class="empty-li">&nbsp;</li>
+                <li><a href="helper-library.html">Helper Library</a></li>
+            </ul>
+        </nav>
 
-                        <div class="--center"><img src="../images/excel/inline-regex-results.png" /></div>
+        <section class="sidebarlayout-content">
+            <article>
+                <h1 class="--center">Inline Regex Tool</h1>
+                <blockquote>
+                    <p>A GUI for previewing your Regex pattern before applying it to data in Excel.</p>
+                    <p>It is available on Github at <a
+                            href="https://github.com/ceybers/excel-regex-tool">https://github.com/ceybers/excel-regex-tool</a>.
+                    </p>
+                </blockquote>
 
-                        <h3>Going Forward</h3>
-                        <p>RegEx is an indispensable tool for anyone who works with a lot of data. The biggest feature I
-                            need to add is the ability to save and load Expression and Replace Pattern strings.</p>
-                        <p>I'd also like to add support for performing it on multiple columns at once. Then the smaller
-                            features such as Quality of Life options, better handling of non-matches, and an overhaul of
-                            the UI to match all my other tools.</p>
+                <h3>What does it do?</h3>
+                <p>Loads a preview of the values in a column, then shows you a preview of what your RegEx
+                    Replace would result in for each cell.</p>
+                <p>Once you're satisfied, it applies the RegEx to each cell and displays a summary of how
+                    sucessful you were. You can then choose whether you want to save the results to the
+                    worksheet.</p>
 
-                        <!-- Article ends here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Content ends here -->
-    </div>
-    <div id="footer">
-        <p>&copy; Copyright 2024 Craig Eybers. All rights reserved.</p>
-    </div>
-    </div>
+                <div class="--center"><img src="../images/excel/inline-regex-tool.png" alt="Screenshot of Inline Regex Tool" width="447" height="515"></div>
+
+                <h3>Why did you make this tool?</h3>
+                <p>Vanilla Excel doesn't have any RegEx tools. If you search you'll easily find a User-Defined
+                    Function that works really well, but there is no way to preview whether your expression will
+                    work when you're working with thousands of cells.</p>
+                <p>This tool lets you preview whether or not your expression actually works, and then evaluates
+                    it across all the data in your table in memory, giving you the chance to decide whether or
+                    not to commit those changes to your worksheet.</p>
+
+                <div class="--center"><img src="../images/excel/inline-regex-results.png" alt="Screenshot of Results in Inline Regex Tool" width="456" height="526"></div>
+
+                <h3>Going Forward</h3>
+                <p>RegEx is an indispensable tool for anyone who works with a lot of data. The biggest feature I
+                    need to add is the ability to save and load Expression and Replace Pattern strings.</p>
+                <p>I'd also like to add support for performing it on multiple columns at once. Then the smaller
+                    features such as Quality of Life options, better handling of non-matches, and an overhaul of
+                    the UI to match all my other tools.</p>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footnote">&copy; Copyright 2024 Craig Eybers. All rights reserved.</div>
+    </footer>
 </body>
 
 </html>
